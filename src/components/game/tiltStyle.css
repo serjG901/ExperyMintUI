@@ -1,0 +1,42 @@
+.tilt-root {
+  box-shadow: 0 0 50px 0 rgba(0, 0, 0, 1);
+  width: 60vh;
+  height: 70vh;
+  background-image: linear-gradient(135deg, #999999 0%, #333333 100%);
+  background-image: url("brick.jpg");
+  background-repeat: round;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+}
+
+.tilt-child {
+  position: absolute;
+  top: -70%;
+  left: 50%;
+  transform: translateZ(50px) translateX(-50%) translateY(-50%);
+  box-shadow: 0 0 50px 0 rgba(0, 0, 0, 1);
+}
+
+.tilt-child-new {
+  top: 50%;
+  transition: all 1s ease;
+}
+
+.tilt-child-leave {
+  transform: translateZ(0px) translateX(-50%) translateY(-50%);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 1);
+  transition: all 2s ease;
+}
+
+.tilt-child-remove {
+  top: -70%;
+}
+
+.totally-centered {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
