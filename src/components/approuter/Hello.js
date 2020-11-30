@@ -19,7 +19,7 @@ export default function Hello() {
     `;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col py-4">
       <div className="break-word font-bold text-2xl">{`${language.hello[1]} ${user.name}${language.hello[2]}`}</div>
       <div className="text-justify">
         <div className={textBlockStyle}>

@@ -1,112 +1,76 @@
-export async function setUser(user) {
-  let response = await fetch("http://localhost:3000/setuser/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify(user)
-  });
-  if (response.ok) {
-    let json = await response.json();
-    console.log(`setUser status - ${json.status}`);
-    return json.status;
-  } else {
-    console.log("setUser Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
+let loginData = new Map();
+let publicData = new Map();
+
+export let User = {
+  set currentID(value) {
+    this.id = value;
+  },
+  get currentID() {
+    return this.id;
   }
+};
+
+export async function setUser(newUser) {
+  if (loginData.has(newUser.name)) return false;
+  loginData.set(newUser.name, {
+    name: newUser.name,
+    password: newUser.password,
+  });
+  const publicUser = {
+    name: newUser.name,
+    avatar: "",
+    results: {},
+    score: 0,
+    mistruth: 0,
+    manifest: "",
+    tags: "",
+    filter: "",
+  };
+  publicData.set(newUser.name, publicUser);
+  User.currentID = newUser.name;
+  return true;
 }
 
 export async function getUser() {
-  let response = await fetch("http://localhost:3000/getuser/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    }
-  });
-  if (response.ok) {
-    let json = await response.json();
-    console.log("getUser");
-    console.log(json);
-    return json;
-  } else {
-    console.log("getUser Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
-  }
+  const user = publicData.get(User.currentID);
+  return user;
 }
 
-export async function updateUser(updateUser) {
-  let response = await fetch("http://localhost:3000/updateuser/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify(updateUser)
-  });
-  if (response.ok) {
-    let json = await response.json();
-    console.log(json);
-    return json;
-  } else {
-    console.log("getUser Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
-  }
+export async function updateUser(newUserData) {
+  publicData.set(User.currentID, newUserData);
+  const user = publicData.get(User.currentID);
+  return user;
 }
 
 export async function getOtherUsers(filter) {
-  let response = await fetch(
-    "http://localhost:3000/getotherusers/",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8"
-      },
-      body: JSON.stringify({ filter })
+  let otherUsersInfo = {};
+  const filterTags = filter ? filter.toLowerCase() : "";
+  for (let entry of publicData) {
+    if (entry[0] !== User.currentID) {
+      if (entry[1]["tags"].toLowerCase().indexOf(filterTags) !== -1)
+        otherUsersInfo = {
+          ...otherUsersInfo,
+          [entry[0]]: {
+            name: entry[1].name,
+            manifest: entry[1].manifest,
+            mistruth: entry[1].mistruth,
+            avatar: entry[1].avatar,
+            tags: entry[1].tags,
+            results: entry[1].results,
+          },
+        };
     }
-  );
-  if (response.ok) {
-    let json = await response.json();
-    console.log(json);
-    return json;
-  } else {
-    console.log("getOtherUsers Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
   }
+  return otherUsersInfo;
 }
 
 export async function isNameFree(name) {
-  console.log(name);
-  let response = await fetch("http://localhost:3000/isnamefree/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify({ name: name })
-  });
-  console.log(response);
-  if (response.ok) {
-    let json = await response.json();
-    console.log(`name status - ${json.status}`);
-    return json.status;
-  } else {
-    console.log("isNameFree Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
-  }
+  return !loginData.has(name);
 }
 
-export async function login(user) {
-  let response = await fetch("http://localhost:3000/login/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify(user)
-  });
-  if (response.ok) {
-    let json = await response.json();
-    console.log(`login status - ${json.isLogin}`);
-    return json.isLogin;
-  } else {
-    console.log("login Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
-  }
+export async function login({ name, password }) {
+  const user = loginData.get(name);
+  if (user.password !== password) return false;
+  User.currentID = name;
+  return true;
 }

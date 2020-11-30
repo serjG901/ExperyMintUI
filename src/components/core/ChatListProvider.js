@@ -30,10 +30,19 @@ export const ChatListProvider = ({ children }) => {
           setChatList(closestUsers);
         })
         .catch((error) => {
-          setPushUpError(error.message);
+          setPushUp(null);
+          setPushUpError(language.failedToFetch);
+          console.log(error.message);
         });
     }
-  }, [user, otherUsers, setPushUp, setPushUpError, language]);
+  }, [
+    user,
+    otherUsers,
+    setPushUp,
+    setPushUpError,
+    language.refreshClosest,
+    language.failedToFetch,
+  ]);
 
   return (
     <ChatListContext.Provider value={chatList}>

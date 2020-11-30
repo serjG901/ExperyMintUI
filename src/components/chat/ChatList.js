@@ -1,6 +1,6 @@
 import React from "react";
 import OtherUser from "./OtherUser";
-import FormSendAndShowText from "../common/FormSendAndShowText";
+import FormSendAndShowText from "../account/FormSendAndShowText";
 import { useChatList } from "../core/ChatListProvider";
 import { useTheme } from "../core/ThemeProvider";
 import { useLanguage } from "../core/LanguageProvider";
@@ -18,16 +18,17 @@ export default function ChatList() {
       <FormSendAndShowText nameProperty="filter" />
       {chatList
         ? chatList.map((item) => {
-            const otherUser = {
-              name: item.name,
-              indexOfClosest: item.indexOfClosest,
-              mistruth: item.mistruth,
-              manifest: item.manifest,
-              avatar: item.avatar,
-              tags: item.tags
-            };
-
-            return <OtherUser key={item.id} otherUser={otherUser} />;
+            return (
+              <OtherUser
+                key={item.id}
+                name={item.name}
+                indexOfClosest={item.indexOfClosest}
+                mistruth={item.mistruth}
+                manifest={item.manifest}
+                avatar={item.avatar}
+                tags={item.tags}
+              />
+            );
           })
         : null}
     </div>

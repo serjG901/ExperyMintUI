@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   sendMessage,
   getMessages,
-  deleteMessage
+  deleteMessage,
 } from "../../lib/fetchMessages";
 import { useUser } from "../core/UserProvider";
 import Message from "./Message";
@@ -42,8 +42,8 @@ export default function OtherUserChat({ isOpen, otherUserID }) {
         text: draft,
         date: currentDate,
         isSend: false,
-        isRead: false
-      }
+        isRead: false,
+      },
     ]);
     setDraft("");
     setPushUp(language.otherMessageSend);
@@ -59,7 +59,8 @@ export default function OtherUserChat({ isOpen, otherUserID }) {
         }
       })
       .catch((error) => {
-        setPushUpError(error.message);
+        setPushUpError(language.failedToFetch);
+        console.log(error.message);
       });
   }
 
@@ -72,9 +73,17 @@ export default function OtherUserChat({ isOpen, otherUserID }) {
         setIsSync(false);
       })
       .catch((error) => {
-        setPushUpError(error.message);
+        setPushUpError(language.failedToFetch);
+        console.log(error.message);
       });
-  }, [otherUserID, isSync, setPushUp, setPushUpError, language]);
+  }, [
+    otherUserID,
+    isSync,
+    setPushUp,
+    setPushUpError,
+    language.otherMessagesRefresh,
+    language.failedToFetch,
+  ]);
 
   function handleDeleteMessage(messageID) {
     const oldMessages = messages;
@@ -90,7 +99,8 @@ export default function OtherUserChat({ isOpen, otherUserID }) {
         }
       })
       .catch((error) => {
-        setPushUpError(error.message);
+        setPushUpError(language.failedToFetch);
+        console.log(error.message);
       });
   }
 
@@ -99,18 +109,16 @@ export default function OtherUserChat({ isOpen, otherUserID }) {
       <span className={`${themeColor.colorTextExplane}`}>
         {`${language.otherChat} ${otherUserID}`}
       </span>
-
       <div className="flex flex-col">
-        {messages.map((msg) => (
+        {messages.map((message) => (
           <Message
             isSeen={isOpen}
-            key={msg.date}
-            msg={msg}
+            key={message.date}
+            message={message}
             onDeleteMessage={handleDeleteMessage}
           />
         ))}
       </div>
-
       <form className="flex justify-end" onSubmit={handleMessageSubmit}>
         <TextareaAutosize
           type="text"

@@ -31,32 +31,34 @@ export const LanguageProvider = ({ children }) => {
 export const languageText = {
   by: {
     name: "by",
+    failedToFetch: "Няма падключэння да сервера",
+    isNameFree: "Правяраем імя",
     loginConnect: "Падключэнне...",
     loginCrash: "Дання не захаваны! Паспрабуйце яшчэ.",
     loginLabelName: {
       1: "Унікальнае імя",
       2: "Добрае новае імя",
-      3: "Гэта імя занята"
+      3: "Гэта імя занята",
     },
     loginLabelPassword: {
       1: "Пароль",
-      2: "Пароль няправільны"
+      2: "Пароль няправільны",
     },
     loginButton: "Увайсці",
     languageSetter: "Задайце мову",
     languageSetterSample: {
       1: "Задаць",
-      2: "мову"
+      2: "мову",
     },
     languageName: {
       by: "беларускую",
       en: "англійскую",
-      ru: "рускую"
+      ru: "рускую",
     },
     colorSetter: "Задайце каляровую тэму",
     colorSetterSample: {
       1: "Задаць",
-      2: "тэму"
+      2: "тэму",
     },
     themeName: {
       red: "чырвоную",
@@ -74,7 +76,7 @@ export const languageText = {
       bee: "пчаліную",
       glam: "гламурную",
       fruit: "фруктовую",
-      mint: "мятную"
+      mint: "мятную",
     },
     sendButtonDefault: "Адправіць",
     formExplane: "Націсніце, каб змяніць",
@@ -87,7 +89,8 @@ export const languageText = {
     computingUnique: "Вылічаем ваш унікальны індэкс...",
     refreshOthers: "Загружаем іншых карыстальнікаў...",
     refreshClosest: "Знаходзім блізкіх людзей...",
-    gameExplane: ", уявіце, што вы дырэктар галерэі сучаснага мастацтва. Пакіньце на сцяне карціны, якія вам спадабаюцца.",
+    gameExplane:
+      ", уявіце, што вы дырэктар галерэі сучаснага мастацтва. Пакіньце на сцяне карціны, якія вам спадабаюцца.",
     leaveTitle: "Пакінуць гэту карціну на сцяне",
     leave: "Пакінуць",
     removeTitle: "Прыбраць гэту карціну са сцяны",
@@ -107,7 +110,7 @@ export const languageText = {
     linkQuit: "Выйсці",
     hello: {
       1: "Вітаю",
-      2: "!"
+      2: "!",
     },
     helloText: {
       1: "Праходзьце нашу гульню і знаходзьце блізкіх вам людзей.",
@@ -122,7 +125,7 @@ export const languageText = {
       10: "У чаце вы можаце пакінуць свой маніфест, што будзе бачны ўсім карыстальнікам.",
       11: "Маніфест іншых карыстальнікаў вы можаце ўбачыць у спісе чата справа ад імя карыстальніка.",
       12: "Націснуўшы на карыстальніка ў спісе вы зможаце ўбачыць дадатковую інфармацыю пра яго, а таксама адправіць яму паведамленне.",
-      13: "Знайдзіце сапраўды блізкіх вам людзей!"
+      13: "Знайдзіце сапраўды блізкіх вам людзей!",
     },
     closestPeople: "Блізкія людзі",
     openUserInfo: "Націсніце, каб адкрыць інфармацыю пра карыстальніка",
@@ -130,44 +133,46 @@ export const languageText = {
     otherTagsDefault: "тэгі",
     otherManifestDefault: "маніфест",
     otherCloseness: "блізкасць",
-    otherCompared: "параўнаў малюнкі",
+    otherCompared: "параўналі карціны",
     otherMistruth: "пераменлівы",
-    otherChat: "чат з",
+    otherChat: "гутарка з",
     messageFor: "паведамленне для",
     otherMessagesRefresh: "Загружаем паведамленні...",
     otherMessageSend: "Адпраўляем паведамленне...",
     otherMessageSendCrash: "Паведамленне не адпраўлена! Паспрабуйце яшчэ.",
     otherMessageDelete: "Выдаляем паведамленне...",
-    otherMessageDeleteCrash: "Паведамленне не выдалена! Паспрабуйце яшчэ."
+    otherMessageDeleteCrash: "Паведамленне не выдалена! Паспрабуйце яшчэ.",
   },
   en: {
     name: "en",
+    failedToFetch: "Нет подключения к серверу",
+    isNameFree: "Checking name",
     loginConnect: "Connecting...",
     loginCrash: "Data not saved! Try again",
     loginLabelName: {
       1: "Unique name",
       2: "Good new name",
-      3: "This name is occupied"
+      3: "This name is occupied",
     },
     loginLabelPassword: {
       1: "Password",
-      2: "Password is wrong"
+      2: "Password is wrong",
     },
     loginButton: "Sign in",
     languageSetter: "Set language",
     languageSetterSample: {
       1: "Set",
-      2: "language"
+      2: "language",
     },
     languageName: {
       by: "belarusian",
       en: "english",
-      ru: "russian"
+      ru: "russian",
     },
     colorSetter: "Set color theme",
     colorSetterSample: {
       1: "Set",
-      2: "theme"
+      2: "theme",
     },
     themeName: {
       red: "red",
@@ -185,7 +190,7 @@ export const languageText = {
       bee: "bee",
       glam: "glamur",
       fruit: "fruit",
-      mint: "mint"
+      mint: "mint",
     },
     sendButtonDefault: "Send",
     formExplane: "Click to change",
@@ -219,7 +224,7 @@ export const languageText = {
     linkQuit: "Sign out",
     hello: {
       1: "Hello",
-      2: "!"
+      2: "!",
     },
     helloText: {
       1: "Go through our game and find people close to you.",
@@ -234,7 +239,7 @@ export const languageText = {
       10: "In the chat, you can leave your manifest, which will be visible to all users.",
       11: "Manifest of other users you can see in the chat list to the right of the username.",
       12: "By clicking on a user in the list, you can see additional information about him, as well as send him a message.",
-      13: "Find people who are really close to you!"
+      13: "Find people who are really close to you!",
     },
     closestPeople: "Closest people",
     openUserInfo: "Click for open user info",
@@ -250,36 +255,38 @@ export const languageText = {
     otherMessageSend: "Send message...",
     otherMessageSendCrash: "Message not sent! Try again.",
     otherMessageDelete: "Delete message...",
-    otherMessageDeleteCrash: "Message not deleted! Try again."
+    otherMessageDeleteCrash: "Message not deleted! Try again.",
   },
   ru: {
     name: "ru",
+    failedToFetch: "No connection to the server",
+    isNameFree: "Проверяем имя",
     loginConnect: "Соединяемся...",
     loginCrash: "Данные не сохранены! Попробуйте еще.",
     loginLabelName: {
       1: "Уникальное имя",
       2: "Хорошее новое имя",
-      3: "Это имя занято"
+      3: "Это имя занято",
     },
     loginLabelPassword: {
       1: "Пароль",
-      2: "Пароль не верен"
+      2: "Пароль не верен",
     },
     loginButton: "Войти",
     languageSetter: "Задайте язык",
     languageSetterSample: {
       1: "Задать",
-      2: "язык"
+      2: "язык",
     },
     languageName: {
       by: "белорусский",
       en: "английский",
-      ru: "русский"
+      ru: "русский",
     },
     colorSetter: "Задайте цветовую тему",
     colorSetterSample: {
       1: "Задать",
-      2: "тему"
+      2: "тему",
     },
     themeName: {
       red: "красную",
@@ -297,7 +304,7 @@ export const languageText = {
       bee: "пчелиную",
       glam: "гламурную",
       fruit: "фруктовую",
-      mint: "мятную"
+      mint: "мятную",
     },
     sendButtonDefault: "Отправить",
     formExplane: "Нажмите, чтобы изменить",
@@ -331,7 +338,7 @@ export const languageText = {
     linkQuit: "Выход",
     hello: {
       1: "Привет",
-      2: "!"
+      2: "!",
     },
     helloText: {
       1: "Проходите нашу игру и находите близких вам людей.",
@@ -346,7 +353,7 @@ export const languageText = {
       10: "В чате вы можете оставить свой манифест, что будет виден всем пользователям.",
       11: "Манифест других пользователей вы можете увидеть в списке чата справа от имени пользователя.",
       12: "Нажав на пользователя в списке вы сможете увидеть дополнительную информацию о нем, а также отправить ему сообщение.",
-      13: "Найдите действительно близких вам людей!"
+      13: "Найдите действительно близких вам людей!",
     },
     closestPeople: "Близкие люди",
     openUserInfo: "Нажмите чтобы открыть информацию о пользователе",
@@ -356,12 +363,12 @@ export const languageText = {
     otherCloseness: "близость",
     otherCompared: "сравнили картины",
     otherMistruth: "переменчивый",
-    otherChat: "чат с",
+    otherChat: "разговор с",
     messageFor: "сообщение для",
     otherMessagesRefresh: "Загружаем сообщения...",
     otherMessageSend: "Отправляем сообщение...",
     otherMessageSendCrash: "Сообщение не отправлено! Попробуйте еще.",
     otherMessageDelete: "Удаляем сообщение...",
-    otherMessageDeleteCrash: "Сообщение не удалено! Попробуйте еще."
-  }
+    otherMessageDeleteCrash: "Сообщение не удалено! Попробуйте еще.",
+  },
 };

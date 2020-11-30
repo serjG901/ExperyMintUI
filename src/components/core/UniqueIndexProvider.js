@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
   getAllResultsReduce,
-  getUniqumIndex
+  getUniqumIndex,
 } from "../../lib/getIndexFunctions";
 import { useUser } from "./UserProvider";
 import { useOtherUsers } from "./OtherUsersProvider";
@@ -37,10 +37,20 @@ export function UniqueIndexProvider({ children }) {
           setUniqueIndex(uniqueIndex);
         })
         .catch((error) => {
-          setPushUpError(error.message);
+          setPushUp(null);
+          setPushUpError(language.failedToFetch);
+          console.log(error.message);
         });
     }
-  }, [user, otherUsers, setPushUp, setPushUpError, language]);
+  }, [
+    user,
+    otherUsers,
+    setPushUp,
+    setPushUpError,
+    language.computingAll,
+    language.computingUnique,
+    language.failedToFetch,
+  ]);
 
   return (
     <UniqueIndexContext.Provider value={{ uniqueIndex }}>

@@ -28,10 +28,18 @@ export const OtherUsersProvider = ({ children }) => {
           setOtherUsers(otherUsersData);
         })
         .catch((error) => {
-          setPushUpError(error.message);
+          setPushUp(null);
+          setPushUpError(language.failedToFetch);
+          console.log(error.message);
         });
     }
-  }, [user, setPushUp, setPushUpError, language]);
+  }, [
+    user,
+    setPushUp,
+    setPushUpError,
+    language.refreshOthers,
+    language.failedToFetch,
+  ]);
 
   return (
     <OtherUsersContext.Provider value={otherUsers}>

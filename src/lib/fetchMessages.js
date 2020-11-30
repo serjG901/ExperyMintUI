@@ -1,73 +1,39 @@
+import {User} from "./fetchData";
+let messagesData = [];
+
 export async function getMessages(otherUserID) {
-  let response = await fetch("http://localhost:3000/getmessages/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify({ otherUserID })
-  });
-  if (response.ok) {
-    let json = await response.json();
-    console.log(`getMessages - ${json.messages}`);
-    return json.messages;
-  } else {
-    console.log("getMessages Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
-  }
+  const filtredMessages = messagesData.filter(
+    (msg) =>
+      (msg.from === User.currentID && msg.to === otherUserID) ||
+      (msg.from === otherUserID && msg.to === User.currentID)
+  );
+  return filtredMessages;
 }
 
 export async function deleteMessage(messageID) {
-  let response = await fetch(
-    "http://localhost:3000/deletemessage/",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8"
-      },
-      body: JSON.stringify({ messageID })
-    }
-  );
-  if (response.ok) {
-    let json = await response.json();
-    console.log(`deleteMessage - ${json.status}`);
-    return json.status;
-  } else {
-    console.log("deleteMessage Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
-  }
+  messagesData = messagesData.filter((msg) => msg.id !== messageID);
+  return true;
 }
 
 export async function sendMessage(otherUserID, message, currentDate) {
-  let response = await fetch("http://localhost:3000/sendmessage/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
+  messagesData = [
+    ...messagesData,
+    {
+      id: [otherUserID, currentDate].join(""),
+      from: User.currentID,
+      to: otherUserID,
+      text: message,
+      date: currentDate,
+      isSend: true,
+      isRead: false,
     },
-    body: JSON.stringify({ otherUserID, message, currentDate })
-  });
-  if (response.ok) {
-    let json = await response.json();
-    console.log(`sendMessage - ${json.status}`);
-    return json.status;
-  } else {
-    console.log("sendMessage Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
-  }
+  ];
+  return true;
 }
 
 export async function setIsRead(messageID) {
-  let response = await fetch("http://localhost:3000/setisread/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify({ messageID })
-  });
-  if (response.ok) {
-    let json = await response.json();
-    console.log(`setIsRead - ${json.status}`);
-  } else {
-    console.log("deleteMessage Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
-  }
+  messagesData = messagesData.map((msg) =>
+    msg.id === messageID ? { ...msg, isRead: true } : msg
+  );
+  return true;
 }

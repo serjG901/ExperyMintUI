@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import TextInput from "./TextInput";
-import SendButton from "./SendButton";
+import TextInput from "../common/TextInput";
+import SendButton from "../common/SendButton";
 import { useTheme } from "../core/ThemeProvider";
 import { useUser, useUserSet } from "../core/UserProvider";
 import { useLanguage } from "../core/LanguageProvider";

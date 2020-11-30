@@ -32,33 +32,48 @@ export const UserProvider = ({ children }) => {
           setUser(userData);
         })
         .catch((error) => {
-          setPushUpError(error.message);
+          setPushUp(null);
+          setPushUpError(language.failedToFetch);
+          console.log(error.message);
         });
     } else {
       setUser({});
     }
-  }, [isLogin, setPushUp, setPushUpError, language]);
+  }, [
+    isLogin,
+    setPushUp,
+    setPushUpError,
+    language.refreshData,
+    language.failedToFetch,
+  ]);
 
   useEffect(() => {
     if (isLogin && Object.keys(user).length !== 0) {
       getUser().then((userData) => {
         const equal = JSON.stringify(user) === JSON.stringify(userData);
-        console.log(equal);
         if (!equal) {
           setPushUp(language.updateData);
-          console.log(equal);
           updateUser(user)
             .then((userData) => {
               setPushUp(null);
               setUser(userData);
             })
             .catch((error) => {
-              setPushUpError(error.message);
+              setPushUp(null);
+              setPushUpError(language.failedToFetch);
+              console.log(error.message);
             });
         }
       });
     }
-  }, [isLogin, user, setPushUp, language, setPushUpError]);
+  }, [
+    isLogin,
+    user,
+    setPushUp,
+    language.updateData,
+    language.failedToFetch,
+    setPushUpError,
+  ]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

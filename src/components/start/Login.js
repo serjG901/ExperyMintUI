@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-//import { setUserData, isPasswordCorrect } from "../../lib/usersData";
 import { isNameFree, login, setUser } from "../../lib/fetchData";
 import SendButton from "../common/SendButton";
 import TextInput from "../common/TextInput";
@@ -10,7 +9,7 @@ import { usePushUpSet } from "../core/PushUpProvider";
 import { useLanguage } from "../core/LanguageProvider";
 
 export default function Login() {
-  const [nameStatus, setNameStatus] = useState(true);
+  const [nameStatus, setNameStatus] = useState(false);
   const [passwordStatus, setPasswordStatus] = useState(true);
   const [changeName, setChangeName] = useState(false);
   const [nameDraft, setNameDraft] = useState("");
@@ -37,7 +36,9 @@ export default function Login() {
           }
         })
         .catch((error) => {
-          setPushUpError(error.message);
+          setPushUp(null);
+          setPushUpError(language.failedToFetch);
+          console.log(error.message);
         });
     } else {
       login(user)
@@ -47,7 +48,9 @@ export default function Login() {
           if (statusLogin) setLogin(true);
         })
         .catch((error) => {
-          setPushUpError(error.message);
+          setPushUp(null);
+          setPushUpError(language.failedToFetch);
+          console.log(error.message);
         });
     }
   }
@@ -55,18 +58,27 @@ export default function Login() {
   useEffect(() => {
     if (nameDraft === "") {
       setChangeName(false);
-      setNameStatus(true);
       return;
     }
-    setChangeName(true);
+    setPushUp(language.isNameFree);
     isNameFree(nameDraft)
       .then((status) => {
+        setPushUp(null);
         setNameStatus(status);
+        setChangeName(true);
       })
       .catch((error) => {
-        setPushUpError(error.message);
+        setPushUp(null);
+        setPushUpError(language.failedToFetch);
+        console.log(error.message);
       });
-  }, [nameDraft, setPushUpError]);
+  }, [
+    nameDraft,
+    setPushUp,
+    setPushUpError,
+    language.isNameFree,
+    language.failedToFetch,
+  ]);
 
   useEffect(() => {
     setPasswordStatus(true);

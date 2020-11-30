@@ -82,7 +82,7 @@ export default function Game() {
   }
 
   return (
-    <div>
+    <div className="py-4">
       <div className="p-2">
         {user.name}
         {language.gameExplane}

@@ -1,5 +1,5 @@
 import React from "react";
-import FormSendAndShowText from "../common/FormSendAndShowText";
+import FormSendAndShowText from "./FormSendAndShowText";
 import SimpleIndex from "./SimpleIndex";
 import FilterStatus from "./FilterStatus";
 import UniqueIndex from "./UniqueIndex";

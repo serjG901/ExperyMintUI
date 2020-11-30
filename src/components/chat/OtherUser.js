@@ -7,7 +7,14 @@ import OtherUserName from "./OtherUserName";
 import OtherUserManifest from "./OtherUserManifest";
 import { useLanguage } from "../core/LanguageProvider";
 
-export default function OtherUser({ otherUser }) {
+export default function OtherUser({
+  name,
+  indexOfClosest,
+  mistruth,
+  manifest,
+  avatar,
+  tags,
+}) {
   const themeColor = useTheme();
   const language = useLanguage();
 
@@ -21,7 +28,7 @@ export default function OtherUser({ otherUser }) {
 
   return (
     <div
-      key={otherUser.name}
+      key={name}
       title={openOtherUserInfoAndChat ? "" : language.openUserInfo}
       className={
         openOtherUserInfoAndChat
@@ -34,8 +41,8 @@ export default function OtherUser({ otherUser }) {
         onClick={handleOpenBody}
       >
         <div className={`flex p-2 my-2`}>
-          <OtherUserName>{otherUser.name}</OtherUserName>
-          <OtherUserManifest>{otherUser.manifest}</OtherUserManifest>
+          <OtherUserName>{name}</OtherUserName>
+          <OtherUserManifest>{manifest}</OtherUserManifest>
         </div>
       </div>
       <div
@@ -46,16 +53,13 @@ export default function OtherUser({ otherUser }) {
         }
       >
         <OtherUserStatistic
-          indexOfClosest={otherUser.indexOfClosest}
-          mistruth={otherUser.mistruth}
+          indexOfClosest={indexOfClosest}
+          mistruth={mistruth}
         />
-        <OtherUserAvatarAndTags
-          avatar={otherUser.avatar}
-          tags={otherUser.tags}
-        />
+        <OtherUserAvatarAndTags avatar={avatar} tags={tags} />
         <OtherUserChat
           isOpen={openOtherUserInfoAndChat}
-          otherUserID={otherUser.name}
+          otherUserID={name}
         />
       </div>
     </div>

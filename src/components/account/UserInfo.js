@@ -1,5 +1,5 @@
 import React from "react";
-import FormSendAndShowText from "../common/FormSendAndShowText";
+import FormSendAndShowText from "./FormSendAndShowText";
 import UserName from "./UserName";
 
 export default function UserInfo() {
