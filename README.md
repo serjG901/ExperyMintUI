@@ -1,2 +1,1 @@
-# ExperyMintUI
- CRA ExperyMintUI
+CRA ExperyMintUI
