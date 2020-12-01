@@ -23,7 +23,12 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const user = { name: nameDraft, password: passwordDraft };
+    const currentDate = Date.now();
+    const user = {
+      name: nameDraft,
+      password: passwordDraft,
+      lastUpdate: currentDate
+    };
     setPushUp(language.loginConnect);
     if (nameStatus) {
       setUser(user)
@@ -77,7 +82,7 @@ export default function Login() {
     setPushUp,
     setPushUpError,
     language.isNameFree,
-    language.failedToFetch,
+    language.failedToFetch
   ]);
 
   useEffect(() => {

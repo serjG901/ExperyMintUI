@@ -8,7 +8,7 @@ export default function Tilt({ children, choiceType }) {
   useEffect(() => {
     const tiltNode = tiltRef.current;
     const vanillaTiltOptions = {
-      max: 45,
+      max: 35,
       speed: 400,
       glare: true,
       "max-glare": 0.5,

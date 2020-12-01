@@ -27,6 +27,7 @@ export default function ChatList() {
                 manifest={item.manifest}
                 avatar={item.avatar}
                 tags={item.tags}
+                lastUpdate={item.lastUpdate}
               />
             );
           })

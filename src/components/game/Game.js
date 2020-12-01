@@ -87,14 +87,14 @@ export default function Game() {
         {user.name}
         {language.gameExplane}
       </div>
-      <div className="flex">
-        <div className="flex-1"></div>
-        <Tilt className="flex-1" choiceType={choiceType}>
+      <div className="flex justify-center py-4">
+        <div className="w-1/6"></div>
+        <Tilt className="w-2/3" choiceType={choiceType}>
           <div className="totally-centered">
             <img alt="img on wall" src={`./img/${image}`} />
           </div>
         </Tilt>
-        <div className="flex-1"></div>
+        <div className="w-1/6"></div>
       </div>
       <div className="flex content-center p-2">
         <button

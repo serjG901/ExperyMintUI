@@ -81,8 +81,8 @@ export async function getClosestUsers(user, otherUsers) {
       name: otherUsers[otherUserID].name,
       manifest: otherUsers[otherUserID].manifest,
       mistruth: otherUsers[otherUserID].mistruth,
-      avatar: otherUsers[otherUserID].avatar,
       tags: otherUsers[otherUserID].tags,
+      lastUpdate: otherUsers[otherUserID].lastUpdate,
       indexOfClosest: getIndexOfClosest(
         user.results,
         otherUsers[otherUserID].results

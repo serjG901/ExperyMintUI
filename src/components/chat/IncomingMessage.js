@@ -27,7 +27,7 @@ export default function IncomingMessage({ message, onDeleteMessage }) {
 
   return (
     <div className={style}>
-       {message.id ? (
+      {message.id ? (
         <div
           onClick={() => onDeleteMessage(message.id)}
           className={styleDelete}

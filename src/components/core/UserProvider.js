@@ -44,19 +44,19 @@ export const UserProvider = ({ children }) => {
     setPushUp,
     setPushUpError,
     language.refreshData,
-    language.failedToFetch,
+    language.failedToFetch
   ]);
 
   useEffect(() => {
     if (isLogin && Object.keys(user).length !== 0) {
-      getUser().then((userData) => {
-        const equal = JSON.stringify(user) === JSON.stringify(userData);
+      getUser().then((userOnServer) => {
+        const equal = JSON.stringify(user) === JSON.stringify(userOnServer);
         if (!equal) {
           setPushUp(language.updateData);
-          updateUser(user)
-            .then((userData) => {
+          updateUser({ ...user, lastUpdate: Date.now() })
+            .then((userOnServer) => {
               setPushUp(null);
-              setUser(userData);
+              setUser(userOnServer);
             })
             .catch((error) => {
               setPushUp(null);
@@ -72,7 +72,7 @@ export const UserProvider = ({ children }) => {
     setPushUp,
     language.updateData,
     language.failedToFetch,
-    setPushUpError,
+    setPushUpError
   ]);
 
   return (

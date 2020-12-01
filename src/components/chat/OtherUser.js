@@ -12,8 +12,8 @@ export default function OtherUser({
   indexOfClosest,
   mistruth,
   manifest,
-  avatar,
   tags,
+  lastUpdate
 }) {
   const themeColor = useTheme();
   const language = useLanguage();
@@ -52,15 +52,18 @@ export default function OtherUser({
             : "hidden"
         }
       >
+        <p className={`${themeColor.colorTextExplane}`}>
+          {`${language.otherLastUpdate}:`}{" "}
+          <span className={themeColor.colorTextOtherUser}>{`${new Date(
+            lastUpdate
+          ).toLocaleString()}`}</span>
+        </p>
         <OtherUserStatistic
           indexOfClosest={indexOfClosest}
           mistruth={mistruth}
         />
-        <OtherUserAvatarAndTags avatar={avatar} tags={tags} />
-        <OtherUserChat
-          isOpen={openOtherUserInfoAndChat}
-          otherUserID={name}
-        />
+        <OtherUserAvatarAndTags name={name} tags={tags} />
+        <OtherUserChat isOpen={openOtherUserInfoAndChat} otherUserID={name} />
       </div>
     </div>
   );

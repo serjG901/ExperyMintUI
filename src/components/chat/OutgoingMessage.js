@@ -5,13 +5,13 @@ export default function OutgoingMessage({ message, onDeleteMessage }) {
   const themeColor = useTheme();
 
   const style = `
-  relative
-  shadow-md
-  self-end w-1/2
-  px-2 m-2 rounded-md 
-  text-left 
-  ${themeColor.colorTextMain}
-  ${themeColor.bgOutgoingMessage}`;
+    relative
+    shadow-md
+    self-end w-1/2
+    px-2 m-2 rounded-md 
+    text-left 
+    ${themeColor.colorTextMain}
+    ${themeColor.bgOutgoingMessage}`;
 
   const styleDelete = `
     absolute

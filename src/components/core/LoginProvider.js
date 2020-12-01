@@ -1,4 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { isEnter } from "../../lib/fetchData";
+import { usePushUpSet } from "../core/PushUpProvider";
+import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
+import { useLanguage } from "../core/LanguageProvider";
 
 const LoginContext = React.createContext();
 
@@ -11,7 +15,30 @@ export const useLoginSet = () => {
 };
 
 export const LoginProvider = ({ children }) => {
+  const setPushUp = usePushUpSet();
+  const setPushUpError = usePushUpErrorSet();
+  const language = useLanguage();
   const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    setPushUp(language.loginConnect);
+    isEnter()
+      .then((isEnter) => {
+        setPushUp(null);
+        setIsLogin(isEnter);
+      })
+      .catch((error) => {
+        setPushUp(null);
+        setPushUpError(language.failedToFetch);
+        console.log(error.message);
+      });
+  }, [
+    setIsLogin,
+    language.loginConnect,
+    language.failedToFetch,
+    setPushUp,
+    setPushUpError
+  ]);
 
   return (
     <LoginContext.Provider value={{ isLogin, setIsLogin }}>

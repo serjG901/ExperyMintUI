@@ -1,12 +1,15 @@
 import React from "react";
 import { useTheme } from "../core/ThemeProvider";
-import { useUser, useUserSet } from "../core/UserProvider";
+import { useAvatar, useAvatarSet } from "../core/AvatarProvider";
 import Resizer from "react-image-file-resizer";
 import { useLanguage } from "../core/LanguageProvider";
 
 export default function AvatarSetDelete() {
   const themeColor = useTheme();
   const language = useLanguage();
+
+  const avatar = useAvatar();
+  const setAvatar = useAvatarSet();
 
   const styleLikeButton = `
   transition-all 
@@ -19,9 +22,6 @@ export default function AvatarSetDelete() {
   ${themeColor.bgButton}
   ${themeColor.hbgButton}
   `;
-
-  const user = useUser();
-  const setUser = useUserSet();
 
   const resizeFile = (file) =>
     new Promise((resolve) => {
@@ -43,11 +43,11 @@ export default function AvatarSetDelete() {
     const file = event.currentTarget.files[0];
     if (!file) return;
     const image = await resizeFile(file);
-    setUser({ ...user, avatar: image });
+    setAvatar(image);
   }
 
   function handleDeleteAvatar() {
-    setUser({ ...user, avatar: "" });
+    setAvatar(null);
   }
 
   return (
@@ -69,7 +69,7 @@ export default function AvatarSetDelete() {
         className="uploadAvatar"
         onChange={handleSetAvatar}
       />
-      {user.avatar ? (
+      {avatar ? (
         <span
           title={language.deleteAvatarTitle}
           className={styleLikeButton}
