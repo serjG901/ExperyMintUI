@@ -1,5 +1,5 @@
 export async function isNameFree(name) {
-  const response = await fetch("http://localhost:3000/isnamefree/", {
+  const response = await fetch("/isnamefree/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"
@@ -15,7 +15,7 @@ export async function isNameFree(name) {
 }
 
 export async function login(user) {
-  const response = await fetch("http://localhost:3000/login/", {
+  const response = await fetch("/login/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"
@@ -31,7 +31,7 @@ export async function login(user) {
 }
 
 export async function isLoggedIn() {
-  const response = await fetch("http://localhost:3000/isloggedin/", {
+  const response = await fetch("/isloggedin/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"
@@ -45,8 +45,23 @@ export async function isLoggedIn() {
   }
 }
 
+export async function toLoggedOut() {
+  const response = await fetch("/tologgedout/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    }
+  });
+  if (response.ok) {
+    const toLoggedOut = await response.json();
+    return toLoggedOut.status;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
+}
+
 export async function setUser(user) {
-  const response = await fetch("http://localhost:3000/setuser/", {
+  const response = await fetch("/setuser/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"
@@ -62,7 +77,7 @@ export async function setUser(user) {
 }
 
 export async function getUser() {
-  const response = await fetch("http://localhost:3000/getuser/", {
+  const response = await fetch("/getuser/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"
@@ -77,7 +92,7 @@ export async function getUser() {
 }
 
 export async function updateUser(updateUser) {
-  const response = await fetch("http://localhost:3000/updateuser/", {
+  const response = await fetch("/updateuser/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"
@@ -93,7 +108,7 @@ export async function updateUser(updateUser) {
 }
 
 export async function setAvatarServe(newAvatar) {
-  const response = await fetch("http://localhost:3000/setavatarserve/", {
+  const response = await fetch("/setavatarserve/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"
@@ -109,7 +124,7 @@ export async function setAvatarServe(newAvatar) {
 }
 
 export async function getAvatar() {
-  const response = await fetch("http://localhost:3000/getavatar/", {
+  const response = await fetch("/getavatar/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"
@@ -125,7 +140,7 @@ export async function getAvatar() {
 
 export async function getOtherUsers(filter) {
   const response = await fetch(
-    "http://localhost:3000/getotherusers/",
+    "/getotherusers/",
     {
       method: "POST",
       headers: {
@@ -143,7 +158,7 @@ export async function getOtherUsers(filter) {
 }
 
 export async function getOtherAvatar(otherUserID) {
-  const response = await fetch("http://localhost:3000/getotheravatar/", {
+  const response = await fetch("/getotheravatar/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"

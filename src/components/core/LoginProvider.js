@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { isLoggedIn } from "../../lib/fetchData";
+import { isLoggedIn, toLoggedOut } from "../../lib/fetchData";
 import { usePushUpSet } from "../core/PushUpProvider";
 import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
 import { useLanguage } from "../core/LanguageProvider";
@@ -37,7 +37,36 @@ export const LoginProvider = ({ children }) => {
     language.loginConnect,
     language.failedToFetch,
     setPushUp,
-    setPushUpError
+    setPushUpError,
+  ]);
+
+  useEffect(() => {
+    if (!isLogin) {
+      setPushUp(language.toLoggedOut);
+      toLoggedOut()
+        .then((toLoggedOut) => {
+          setPushUp(null);
+          if (toLoggedOut) {
+            setPushUpError(language.toLoggedOutSucces);
+          } else {
+            setPushUpError(language.toLoggedOutCrash);
+            setIsLogin(true);
+          }
+        })
+        .catch((error) => {
+          setPushUp(null);
+          setPushUpError(language.failedToFetch);
+          console.log(error.message);
+        });
+    }
+  }, [
+    isLogin,
+    language.toLoggedOut,
+    language.toLoggedOutSucces,
+    language.toLoggedOutCrash,
+    language.failedToFetch,
+    setPushUp,
+    setPushUpError,
   ]);
 
   return (

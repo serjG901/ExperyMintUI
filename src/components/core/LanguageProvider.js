@@ -34,7 +34,10 @@ export const languageText = {
     failedToFetch: "Няма падключэння да сервера",
     isNameFree: "Правяраем імя",
     loginConnect: "Падключэнне...",
-    loginCrash: "Дання не захаваны! Паспрабуйце яшчэ.",
+    toLoggedOut: "Выходзім з систэмы...",
+    toLoggedOutSucces: "Выйшлі з сістемы",
+    toLoggedOutCrash: "Не атрымалася выйсці",
+    loginCrash: "Данныя не захаваны! Паспрабуйце яшчэ.",
     loginLabelName: {
       1: "Унікальнае імя",
       2: "Добрае новае імя",
@@ -149,6 +152,9 @@ export const languageText = {
     failedToFetch: "Нет подключения к серверу",
     isNameFree: "Checking name",
     loginConnect: "Connecting...",
+    toLoggedOut: "Logging out...",
+    toLoggedOutSucces: "Вышли из системы",
+    toLoggedOutCrash: "Не получилось выйти",
     loginCrash: "Data not saved! Try again",
     loginLabelName: {
       1: "Unique name",
@@ -264,6 +270,9 @@ export const languageText = {
     failedToFetch: "No connection to the server",
     isNameFree: "Проверяем имя",
     loginConnect: "Соединяемся...",
+    toLoggedOut: "Выходим из системы...",
+    toLoggedOutSucces: "Вышли из системы",
+    toLoggedOutCrash: "Не получилось выйти",
     loginCrash: "Данные не сохранены! Попробуйте еще.",
     loginLabelName: {
       1: "Уникальное имя",

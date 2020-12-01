@@ -1,5 +1,5 @@
 export async function getMessages(otherUserID) {
-  let response = await fetch("http://localhost:3000/getmessages/", {
+  let response = await fetch("/getmessages/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"
@@ -18,7 +18,7 @@ export async function getMessages(otherUserID) {
 
 export async function deleteMessage(messageID) {
   let response = await fetch(
-    "http://localhost:3000/deletemessage/",
+    "/deletemessage/",
     {
       method: "POST",
       headers: {
@@ -38,7 +38,7 @@ export async function deleteMessage(messageID) {
 }
 
 export async function sendMessage(otherUserID, message, currentDate) {
-  let response = await fetch("http://localhost:3000/sendmessage/", {
+  let response = await fetch("/sendmessage/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"
@@ -56,7 +56,7 @@ export async function sendMessage(otherUserID, message, currentDate) {
 }
 
 export async function setIsRead(messageID) {
-  let response = await fetch("http://localhost:3000/setisread/", {
+  let response = await fetch("/setisread/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8"

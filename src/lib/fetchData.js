@@ -97,6 +97,12 @@ export async function login({ name, password, lastVisit }) {
 
 export async function isLoggedIn() {
   const isLoggedIn = User.currentID ? true : false;
-  console.log(isLoggedIn);
   return isLoggedIn;
 }
+
+export async function toLoggedOut() {
+  User.currentID = null;
+  const isLoggedIn = User.currentID ? true : false;
+  return isLoggedIn;
+}
+
