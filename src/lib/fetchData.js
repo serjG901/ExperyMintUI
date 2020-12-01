@@ -95,8 +95,8 @@ export async function login({ name, password, lastVisit }) {
   return true;
 }
 
-export async function isEnter() {
-  const isEnter = User.currentID ? true : false;
-  console.log(isEnter);
-  return isEnter;
+export async function isLoggedIn() {
+  const isLoggedIn = User.currentID ? true : false;
+  console.log(isLoggedIn);
+  return isLoggedIn;
 }

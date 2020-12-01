@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { isEnter } from "../../lib/fetchData";
+import { isLoggedIn } from "../../lib/fetchData";
 import { usePushUpSet } from "../core/PushUpProvider";
 import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
 import { useLanguage } from "../core/LanguageProvider";
@@ -22,10 +22,10 @@ export const LoginProvider = ({ children }) => {
 
   useEffect(() => {
     setPushUp(language.loginConnect);
-    isEnter()
-      .then((isEnter) => {
+    isLoggedIn()
+      .then((isLoggedIn) => {
         setPushUp(null);
-        setIsLogin(isEnter);
+        setIsLogin(isLoggedIn);
       })
       .catch((error) => {
         setPushUp(null);
