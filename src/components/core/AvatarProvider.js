@@ -22,17 +22,23 @@ export const AvatarProvider = ({ children }) => {
   const avatarRef = useRef();
 
   useEffect(() => {
+    let isSubscribe = true;
     setPushUp(language.refreshData);
     getAvatar()
       .then((avatarOnServer) => {
         setPushUp(null);
-        if (avatarOnServer) setAvatar(avatarOnServer);
+        if (avatarOnServer) {
+          isSubscribe && setAvatar(avatarOnServer);
+        }
       })
       .catch((error) => {
         setPushUp(null);
-        setPushUpError(language.failedToFetch);
+        isSubscribe && setPushUpError(language.failedToFetch);
         console.log(error.message);
       });
+    return () => {
+      isSubscribe = false;
+    };
   }, [language.refreshData, language.failedToFetch, setPushUp, setPushUpError]);
 
   useEffect(() => {
@@ -40,24 +46,26 @@ export const AvatarProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    if (avatar !== avatarRef.current) {
-      setPushUp(language.updateData);
-      setAvatarToServer(avatar)
-        .then((isSave) => {
-          setPushUp(null);
-          if (isSave === true) {
-            setPushUpError(language.updateSucces);
-          } else {
-            setPushUpError(language.updateCrash);
-            setAvatar(avatarRef.current);
-          }
-        })
-        .catch((error) => {
-          setPushUp(null);
-          setPushUpError(language.failedToFetch);
-          console.log(error.message);
-        });
-    }
+    let isSubscribe = true;
+    setPushUp(language.updateData);
+    setAvatarToServer(avatar)
+      .then((isSave) => {
+        setPushUp(null);
+        if (isSave === true) {
+          isSubscribe && setPushUpError(language.updateSucces);
+        } else {
+          isSubscribe && setPushUpError(language.updateCrash);
+          isSubscribe && setAvatar(avatarRef.current);
+        }
+      })
+      .catch((error) => {
+        setPushUp(null);
+        isSubscribe && setPushUpError(language.failedToFetch);
+        console.log(error.message);
+      });
+    return () => {
+      isSubscribe = false;
+    };
   }, [
     avatar,
     language.updateData,
