@@ -25,6 +25,7 @@ export function UniqueIndexProvider({ children }) {
   const [uniqueIndex, setUniqueIndex] = useState(0);
 
   useEffect(() => {
+    let isSubscribed = true;
     if (user && otherUsers) {
       setPushUp(language.computingAll);
       getAllResultsReduce(otherUsers)
@@ -34,7 +35,7 @@ export function UniqueIndexProvider({ children }) {
         })
         .then((uniqueIndex) => {
           setPushUp(null);
-          setUniqueIndex(uniqueIndex);
+          isSubscribed && setUniqueIndex(uniqueIndex);
         })
         .catch((error) => {
           setPushUp(null);
@@ -42,6 +43,10 @@ export function UniqueIndexProvider({ children }) {
           console.log(error.message);
         });
     }
+    return () => {
+      isSubscribed = false;
+      setPushUp(null);
+    };
   }, [
     user,
     otherUsers,

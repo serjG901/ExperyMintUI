@@ -21,9 +21,6 @@ import { usePushUpError } from "../core/PushUpErrorProvider";
 import { usePushUp } from "../core/PushUpProvider";
 import Background from "../common/Background";
 import { useLanguage } from "../core/LanguageProvider";
-import { toLoggedOut } from "../../lib/fetchData";
-import { usePushUpSet } from "../core/PushUpProvider";
-import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
 
 export default function AppRouter() {
   const themeColor = useTheme();
@@ -32,8 +29,6 @@ export default function AppRouter() {
   const pushUpError = usePushUpError();
   const pushUp = usePushUp();
   const language = useLanguage();
-  const setPushUp = usePushUpSet();
-  const setPushUpError = usePushUpErrorSet();
 
   const linkStyle = `
     flex-1 w-1/4
@@ -65,28 +60,13 @@ export default function AppRouter() {
   }
 
   function handleQuit() {
-    setPushUp(language.toLoggedOut);
-    toLoggedOut()
-      .then((toLoggedOut) => {
-        setPushUp(null);
-        if (toLoggedOut) {
-          setPushUpError(language.toLoggedOutSucces);
-          setLogin(false);
-          handleActivePage(null);
-        } else {
-          setPushUpError(language.toLoggedOutCrash);
-        }
-      })
-      .catch((error) => {
-        setPushUp(null);
-        setPushUpError(language.failedToFetch);
-        console.log(error.message);
-      });
+    setLogin(false);
+    handleActivePage(null);
   }
 
   return (
     <div className={themeColor.colorTextMain}>
-      {isLogin ? (
+      {isLogin === true ? (
         <Router>
           <div className={`h-screen text-center AppFontFamily${language.name}`}>
             <nav className="flex">

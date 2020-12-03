@@ -37,7 +37,7 @@ export default function Login() {
           if (statusDataSaved) {
             setLogin(true);
           } else {
-            setPushUpError(language.loginCrash);
+            setPushUpError(language.updateCrash);
           }
         })
         .catch((error) => {

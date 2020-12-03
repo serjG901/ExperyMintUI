@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from "react";
-import {
-  sendMessage,
-  getMessages,
-  deleteMessage,
-} from "../../lib/fetchMessages";
-import { useUser } from "../core/UserProvider";
+import React, { useState } from "react";
 import Message from "./Message";
 import SendButton from "../common/SendButton";
 import TextareaAutosize from "react-textarea-autosize";
 import { useTheme } from "../core/ThemeProvider";
-import { usePushUpSet } from "../core/PushUpProvider";
-import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
 import { useLanguage } from "../core/LanguageProvider";
+import {
+  useChat,
+  useMessageSet,
+  useMessageForDeleteSet,
+} from "../core/ChatProvider";
 
 export default function OtherUserChat({ isOpen, otherUserID }) {
-  const user = useUser();
-  const setPushUp = usePushUpSet();
-  const setPushUpError = usePushUpErrorSet();
-  const language = useLanguage();
-
-  const [draft, setDraft] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [isSync, setIsSync] = useState(true);
   const themeColor = useTheme();
+  const language = useLanguage();
+  const chat = useChat();
+  const setMessage = useMessageSet();
+  const setMessageForDelete = useMessageForDeleteSet();
+  const [draft, setDraft] = useState("");
 
   function handleDraftChange(event) {
     setDraft(event.currentTarget.value);
@@ -30,78 +24,17 @@ export default function OtherUserChat({ isOpen, otherUserID }) {
 
   function handleMessageSubmit(event) {
     event.preventDefault();
-    if (draft === "") return;
-    const currentDate = Date.now();
-    const oldMessages = messages;
-    const oldMessage = draft;
-    setMessages([
-      ...messages,
-      {
-        from: user.name,
-        to: otherUserID,
-        text: draft,
-        date: currentDate,
-        isSend: false,
-        isRead: false,
-      },
-    ]);
+    const message = draft.trim();
+    if (message === "") {
+      setDraft("");
+      return;
+    }
+    setMessage(message);
     setDraft("");
-    setPushUp(language.otherMessageSend);
-    sendMessage(otherUserID, draft, currentDate)
-      .then((status) => {
-        if (!status) {
-          setPushUp(language.otherMessageSendCrash);
-          setMessages(oldMessages);
-          setDraft(oldMessage);
-        } else {
-          setPushUp(null);
-          setIsSync(true);
-        }
-      })
-      .catch((error) => {
-        setPushUpError(language.failedToFetch);
-        console.log(error.message);
-      });
   }
 
-  useEffect(() => {
-    setPushUp(language.otherMessagesRefresh);
-    getMessages(otherUserID)
-      .then((messages) => {
-        setPushUp(null);
-        setMessages(messages);
-        setIsSync(false);
-      })
-      .catch((error) => {
-        setPushUpError(language.failedToFetch);
-        console.log(error.message);
-      });
-  }, [
-    otherUserID,
-    isSync,
-    setPushUp,
-    setPushUpError,
-    language.otherMessagesRefresh,
-    language.failedToFetch,
-  ]);
-
   function handleDeleteMessage(messageID) {
-    const oldMessages = messages;
-    setMessages(messages.filter((msg) => msg.id !== messageID));
-    setPushUp(language.otherMessageDelete);
-    deleteMessage(messageID)
-      .then((status) => {
-        if (!status) {
-          setPushUp(language.otherMessageDeleteCrash);
-          setMessages(oldMessages);
-        } else {
-          setPushUp(null);
-        }
-      })
-      .catch((error) => {
-        setPushUpError(language.failedToFetch);
-        console.log(error.message);
-      });
+    setMessageForDelete(messageID);
   }
 
   return (
@@ -110,12 +43,13 @@ export default function OtherUserChat({ isOpen, otherUserID }) {
         {`${language.otherChat} ${otherUserID}`}
       </span>
       <div className="flex flex-col">
-        {messages.map((message) => (
+        {chat.map((message) => (
           <Message
-            isSeen={isOpen}
+            isOpen={isOpen}
             key={message.date}
             message={message}
             onDeleteMessage={handleDeleteMessage}
+            otherUserID={otherUserID}
           />
         ))}
       </div>

@@ -15,7 +15,7 @@ export const PushUpErrorProvider = ({ children }) => {
   const [pushUpError, setPushUpError] = useState(null);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => setPushUpError(null), 5000);
+    const timeoutId = setTimeout(() => setPushUpError(null), 3000);
     return () => clearTimeout(timeoutId);
   }, [pushUpError]);
 

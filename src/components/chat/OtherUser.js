@@ -6,8 +6,10 @@ import OtherUserAvatarAndTags from "./OtherUserAvatarAndTags";
 import OtherUserName from "./OtherUserName";
 import OtherUserManifest from "./OtherUserManifest";
 import { useLanguage } from "../core/LanguageProvider";
+import {ChatProvider} from "../core/ChatProvider";
 
 export default function OtherUser({
+  otherUserID,
   name,
   indexOfClosest,
   mistruth,
@@ -62,8 +64,10 @@ export default function OtherUser({
           indexOfClosest={indexOfClosest}
           mistruth={mistruth}
         />
-        <OtherUserAvatarAndTags name={name} tags={tags} />
-        <OtherUserChat isOpen={openOtherUserInfoAndChat} otherUserID={name} />
+        <OtherUserAvatarAndTags otherUserID={otherUserID} tags={tags} />
+        <ChatProvider otherUserID={otherUserID}>
+          <OtherUserChat isOpen={openOtherUserInfoAndChat} otherUserID={name} />
+        </ChatProvider>
       </div>
     </div>
   );

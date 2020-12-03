@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
-import { getAvatar, setAvatarServe } from "../../lib/fetchData";
+import React, { useState, useContext, useEffect, useRef } from "react";
+import { getAvatar, setAvatarToServer } from "../../lib/fetchData";
 import { usePushUpSet } from "../core/PushUpProvider";
 import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
 import { useLanguage } from "../core/LanguageProvider";
@@ -19,13 +19,14 @@ export const AvatarProvider = ({ children }) => {
   const setPushUpError = usePushUpErrorSet();
   const language = useLanguage();
   const [avatar, setAvatar] = useState(null);
+  const avatarRef = useRef();
 
   useEffect(() => {
     setPushUp(language.refreshData);
     getAvatar()
-      .then((avatarGet) => {
+      .then((avatarOnServer) => {
         setPushUp(null);
-        setAvatar(avatarGet);
+        if (avatarOnServer) setAvatar(avatarOnServer);
       })
       .catch((error) => {
         setPushUp(null);
@@ -35,25 +36,34 @@ export const AvatarProvider = ({ children }) => {
   }, [language.refreshData, language.failedToFetch, setPushUp, setPushUpError]);
 
   useEffect(() => {
-    if (avatar) {
-      setPushUp(language.updateData);
-      setAvatarServe(avatar)
-        .then((avatarGet) => {
-          setPushUp(null);
-          if (avatar !== avatarGet) setAvatar(avatarGet);
-        })
-        .catch((error) => {
-          setPushUp(null);
-          setPushUpError(language.failedToFetch);
-          console.log(error.message);
-        });
-    }
+    avatarRef.current = avatar;
+  });
+
+  useEffect(() => {
+    setPushUp(language.updateData);
+    setAvatarToServer(avatar)
+      .then((isSave) => {
+        setPushUp(null);
+        if (isSave === true) {
+          setPushUpError(language.updateSucces);
+        } else {
+          setPushUpError(language.updateCrash);
+          setAvatar(avatarRef.current);
+        }
+      })
+      .catch((error) => {
+        setPushUp(null);
+        setPushUpError(language.failedToFetch);
+        console.log(error.message);
+      });
   }, [
     avatar,
     language.updateData,
+    language.updateSucces,
+    language.updateCrash,
     language.failedToFetch,
     setPushUp,
-    setPushUpError
+    setPushUpError,
   ]);
 
   return (

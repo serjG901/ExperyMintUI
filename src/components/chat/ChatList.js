@@ -21,6 +21,7 @@ export default function ChatList() {
             return (
               <OtherUser
                 key={item.id}
+                otherUserID={item.id}
                 name={item.name}
                 indexOfClosest={item.indexOfClosest}
                 mistruth={item.mistruth}

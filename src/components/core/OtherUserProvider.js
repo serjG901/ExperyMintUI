@@ -1,32 +1,30 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useUser } from "./UserProvider";
-import { getOtherUsers } from "../../lib/fetchData";
+﻿import React, { useEffect, useState, useContext } from "react";
+import { getOtherUser } from "../../lib/fetchData";
 import { usePushUpSet } from "../core/PushUpProvider";
 import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
 import { useLanguage } from "../core/LanguageProvider";
 
 const OtherUsersContext = React.createContext();
 
-export const useOtherUsers = () => {
+export const useOtherUser = () => {
   return useContext(OtherUsersContext);
 };
 
-export const OtherUsersProvider = ({ children }) => {
-  const user = useUser();
+export const OtherUserProvider = ({ otherUserID, children }) => {
   const setPushUp = usePushUpSet();
   const setPushUpError = usePushUpErrorSet();
   const language = useLanguage();
 
-  const [otherUsers, setOtherUsers] = useState(null);
+  const [otherUser, setOtherUser] = useState(null);
 
   useEffect(() => {
     let isSubscribed = true;
     if (user.name) {
       setPushUp(language.refreshOthers);
-      getOtherUsers(user.filter)
-        .then((otherUsersData) => {
+      getOtherUser(otherUserID)
+        .then((otherUserData) => {
           setPushUp(null);
-          isSubscribed && setOtherUsers(otherUsersData);
+          isSubscribed && setOtherUser(otherUserData);
         })
         .catch((error) => {
           setPushUp(null);
@@ -39,7 +37,6 @@ export const OtherUsersProvider = ({ children }) => {
       setPushUp(null);
     };
   }, [
-    user,
     setPushUp,
     setPushUpError,
     language.refreshOthers,
@@ -47,7 +44,7 @@ export const OtherUsersProvider = ({ children }) => {
   ]);
 
   return (
-    <OtherUsersContext.Provider value={otherUsers}>
+    <OtherUsersContext.Provider value={otherUser}>
       {children}
     </OtherUsersContext.Provider>
   );

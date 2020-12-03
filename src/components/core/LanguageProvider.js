@@ -1,4 +1,4 @@
-﻿import React, { useContext, useEffect, useState } from "react";
+﻿﻿﻿import React, { useContext, useEffect, useState } from "react";
 
 const LanguageContext = React.createContext();
 
@@ -34,10 +34,12 @@ export const languageText = {
     failedToFetch: "Няма падключэння да сервера",
     isNameFree: "Правяраем імя",
     loginConnect: "Падключэнне...",
+    failedloginConnect: "Патрабуецца ўваход",
     toLoggedOut: "Выходзім з систэмы...",
     toLoggedOutSucces: "Выйшлі з сістемы",
     toLoggedOutCrash: "Не атрымалася выйсці",
-    loginCrash: "Данныя не захаваны! Паспрабуйце яшчэ.",
+    updateSucces: "Даныя захаваны",
+    updateCrash: "Данныя не захаваны! Паспрабуйце яшчэ.",
     loginLabelName: {
       1: "Унікальнае імя",
       2: "Добрае новае імя",
@@ -149,13 +151,15 @@ export const languageText = {
   },
   en: {
     name: "en",
-    failedToFetch: "Нет подключения к серверу",
+    failedToFetch: "No connection to server",
     isNameFree: "Checking name",
     loginConnect: "Connecting...",
+    failedloginConnect: "Login required",
     toLoggedOut: "Logging out...",
-    toLoggedOutSucces: "Вышли из системы",
-    toLoggedOutCrash: "Не получилось выйти",
-    loginCrash: "Data not saved! Try again",
+    toLoggedOutSucces: "Logged out",
+    toLoggedOutCrash: "Failed to log out",
+    updateSucces: "Data saved",
+    updateCrash: "Data not saved! Try again",
     loginLabelName: {
       1: "Unique name",
       2: "Good new name",
@@ -267,13 +271,15 @@ export const languageText = {
   },
   ru: {
     name: "ru",
-    failedToFetch: "No connection to the server",
+    failedToFetch: "Нет связи с сервером",
     isNameFree: "Проверяем имя",
     loginConnect: "Соединяемся...",
+    failedloginConnect: "Требуется вход",
     toLoggedOut: "Выходим из системы...",
     toLoggedOutSucces: "Вышли из системы",
     toLoggedOutCrash: "Не получилось выйти",
-    loginCrash: "Данные не сохранены! Попробуйте еще.",
+    updateSucces: "Данные сохранены",
+    updateCrash: "Данные не сохранены! Попробуйте еще.",
     loginLabelName: {
       1: "Уникальное имя",
       2: "Хорошее новое имя",

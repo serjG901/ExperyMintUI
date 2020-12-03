@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { useLogin } from "./LoginProvider";
-import { getUser, updateUser } from "../../lib/fetchData";
+import { getUser, updateUser, toLoggedOut } from "../../lib/fetchData";
 import { usePushUpSet } from "../core/PushUpProvider";
 import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
 import { useLanguage } from "../core/LanguageProvider";
@@ -22,13 +22,16 @@ export const UserProvider = ({ children }) => {
   const language = useLanguage();
 
   const [user, setUser] = useState({});
+  const userRef = useRef();
 
   useEffect(() => {
-    if (isLogin) {
+    if (isLogin === true) {
       setPushUp(language.refreshData);
+      console.log("getuser");
       getUser()
         .then((userData) => {
           setPushUp(null);
+          userRef.current = userData;
           setUser(userData);
         })
         .catch((error) => {
@@ -37,42 +40,51 @@ export const UserProvider = ({ children }) => {
           console.log(error.message);
         });
     } else {
-      setUser({});
+      if (Object.keys(user).length !== 0) {
+        setPushUp(language.toLoggedOut);
+        toLoggedOut()
+          .then((isLoggedOut) => {
+            setPushUp(null);
+            if (isLoggedOut === true) {
+              setPushUpError(language.toLoggedOutSucces);
+            }
+          })
+          .catch((error) => {
+            setPushUp(null);
+            setPushUpError(language.failedToFetch);
+            console.log(error.message);
+          });
+      }
     }
-  }, [
-    isLogin,
-    setPushUp,
-    setPushUpError,
-    language.refreshData,
-    language.failedToFetch
-  ]);
+  }, [isLogin, setPushUp, setPushUpError, language]);
 
   useEffect(() => {
-    if (isLogin && Object.keys(user).length !== 0) {
-      getUser().then((userOnServer) => {
-        const equal = JSON.stringify(user) === JSON.stringify(userOnServer);
-        if (!equal) {
-          setPushUp(language.updateData);
-          updateUser({ ...user, lastUpdate: Date.now() })
-            .then((userOnServer) => {
-              setPushUp(null);
-              setUser(userOnServer);
-            })
-            .catch((error) => {
-              setPushUp(null);
-              setPushUpError(language.failedToFetch);
-              console.log(error.message);
-            });
-        }
-      });
+    if (Object.keys(user).length !== 0 && user !== userRef.current) {
+      setPushUp(language.updateData);
+      updateUser({ ...user, lastUpdate: Date.now() })
+        .then((userOnServer) => {
+          setPushUp(null);
+          if (userOnServer === true) {
+            setPushUpError(language.updateSucces);
+          } else {
+            setPushUpError(language.updateCrash);
+            setUser(userRef.current);
+          }
+        })
+        .catch((error) => {
+          setPushUp(null);
+          setPushUpError(language.failedToFetch);
+          console.log(error.message);
+        });
     }
   }, [
-    isLogin,
     user,
-    setPushUp,
     language.updateData,
+    language.updateSucces,
+    language.updateCrash,
     language.failedToFetch,
-    setPushUpError
+    setPushUp,
+    setPushUpError,
   ]);
 
   return (

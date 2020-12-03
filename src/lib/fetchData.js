@@ -1,108 +1,193 @@
-let loginData = new Map();
-let publicData = new Map();
-let avatarData = new Map();
-
-export let User = {
-  set currentID(value) {
-    this.id = value;
-  },
-  get currentID() {
-    return this.id;
-  }
-};
-
-export async function setUser(newUser) {
-  if (loginData.has(newUser.name)) return false;
-  loginData.set(newUser.name, {
-    name: newUser.name,
-    password: newUser.password
-  });
-  const publicUser = {
-    name: newUser.name,
-    results: {},
-    score: 0,
-    mistruth: 0,
-    manifest: "",
-    tags: "",
-    filter: "",
-    lastUpdate: newUser.lastUpdate
-  };
-  publicData.set(newUser.name, publicUser);
-  avatarData.set(newUser.name, { avatar: null });
-  User.currentID = newUser.name;
-  return true;
-}
-
-export async function getUser() {
-  const user = publicData.get(User.currentID);
-  return user;
-}
-
-export async function setAvatarServe(avatar) {
-  avatarData.set(User.currentID, { avatar });
-  const userAvatar = avatarData.get(User.currentID);
-  return userAvatar.avatar;
-}
-
-export async function getAvatar() {
-  const userAvatar = avatarData.get(User.currentID);
-  return userAvatar.avatar;
-}
-
-export async function getOtherAvatar(otherUserID) {
-  const otherAvatar = avatarData.get(otherUserID);
-  return otherAvatar.avatar;
-}
-
-export async function updateUser(newUserData) {
-  publicData.set(User.currentID, newUserData);
-  const user = publicData.get(User.currentID);
-  return user;
-}
-
-export async function getOtherUsers(filter) {
-  let otherUsersInfo = {};
-  const filterTags = filter ? filter.toLowerCase() : "";
-  for (let entry of publicData) {
-    if (entry[0] !== User.currentID) {
-      if (entry[1]["tags"].toLowerCase().indexOf(filterTags) !== -1)
-        otherUsersInfo = {
-          ...otherUsersInfo,
-          [entry[0]]: {
-            name: entry[1].name,
-            manifest: entry[1].manifest,
-            mistruth: entry[1].mistruth,
-            tags: entry[1].tags,
-            lastUpdate: entry[1].lastUpdate,
-            results: entry[1].results
-          }
-        };
-    }
-  }
-  return otherUsersInfo;
-}
-
 export async function isNameFree(name) {
-  return !loginData.has(name);
+  const response = await fetch("/isnamefree/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify({ name: name })
+  });
+  if (response.ok) {
+    const isNameFree = await response.json();
+    return isNameFree.status;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
 }
 
-export async function login({ name, password, lastVisit }) {
-  const user = loginData.get(name);
-  if (user.password !== password) return false;
-  const userOld = publicData.get(name);
-  publicData.set(name, { ...userOld, lastVisit });
-  User.currentID = name;
-  return true;
+export async function login(user) {
+  const response = await fetch("/login/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify(user)
+  });
+  if (response.ok) {
+    const login = await response.json();
+    return login.isLogin;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
 }
 
 export async function isLoggedIn() {
-  const isLoggedIn = User.currentID ? true : false;
-  return isLoggedIn;
+  const response = await fetch("/isloggedin/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    }
+  });
+  if (response.ok) {
+    const isLoggedIn = await response.json();
+    return isLoggedIn.status;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
 }
 
 export async function toLoggedOut() {
-  User.currentID = null;
-  const isLoggedIn = User.currentID ? true : false;
-  return isLoggedIn;
+  const response = await fetch("/tologgedout/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    }
+  });
+  if (response.ok) {
+    const toLoggedOut = await response.json();
+    return toLoggedOut.status;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
 }
 
+export async function setUser(user) {
+  const response = await fetch("/setuser/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify(user)
+  });
+  if (response.ok) {
+    const setUser = await response.json();
+    return setUser.status;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
+}
+
+export async function getUser() {
+  const response = await fetch("/getuser/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    }
+  });
+  if (response.ok) {
+    const user = await response.json();
+    return user;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
+}
+
+export async function updateUser(updateUser) {
+  const response = await fetch("/updateuser/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify(updateUser)
+  });
+  if (response.ok) {
+    const user = await response.json();
+    return user.status;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
+}
+
+export async function setAvatarToServer(newAvatar) {
+  const response = await fetch("/setavatarserve/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify({avatar: newAvatar})
+  });
+  if (response.ok) {
+    const isSaved = await response.json();
+    return isSaved.status;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
+}
+
+export async function getAvatar() {
+  const response = await fetch("/getavatar/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    }
+  });
+  if (response.ok) {
+    const userAvatar = await response.json();
+    return userAvatar.avatar;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
+}
+
+export async function getOtherUsers(filter) {
+  const response = await fetch(
+    "/getotherusers/",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8"
+      },
+      body: JSON.stringify({ filter })
+    }
+  );
+  if (response.ok) {
+    const otherUsers = await response.json();
+    return otherUsers;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
+}
+
+export async function getOtherUser(otherUserID) {
+  const response = await fetch(
+    "/getotheruser/",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8"
+      },
+      body: JSON.stringify({ otherUserID })
+    }
+  );
+  if (response.ok) {
+    const otherUser = await response.json();
+    return otherUser;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
+}
+
+export async function getOtherAvatar(otherUserID) {
+  const response = await fetch("/getotheravatar/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify({otherUserID})
+  });
+  if (response.ok) {
+    const userAvatar = await response.json();
+    return userAvatar.avatar;
+  } else {
+    return new Error("Ошибка HTTP: " + response.status);
+  }
+}

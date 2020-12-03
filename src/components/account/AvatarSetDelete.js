@@ -23,7 +23,7 @@ export default function AvatarSetDelete() {
   ${themeColor.hbgButton}
   `;
 
-  const resizeFile = (file) =>
+  const resizeImage = (file) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
@@ -40,10 +40,10 @@ export default function AvatarSetDelete() {
     });
 
   async function handleSetAvatar(event) {
-    const file = event.currentTarget.files[0];
-    if (!file) return;
-    const image = await resizeFile(file);
-    setAvatar(image);
+    const image = event.currentTarget.files[0];
+    if (!image) return;
+    const avatar = await resizeImage(image);
+    setAvatar(avatar);
   }
 
   function handleDeleteAvatar() {

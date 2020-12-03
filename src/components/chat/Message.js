@@ -4,14 +4,19 @@ import { setIsRead } from "../../lib/fetchMessages";
 import IncomingMessage from "./IncomingMessage";
 import OutgoingMessage from "./OutgoingMessage";
 
-export default function Message({ isSeen, message, onDeleteMessage }) {
+export default function Message({
+  isOpen,
+  message,
+  onDeleteMessage,
+  otherUserID,
+}) {
   const user = useUser();
 
   useEffect(() => {
-    if (isSeen && user.name !== message.from && !message.isRead) {
-      setIsRead(message.id);
+    if (isOpen && user.name !== message.from && !message.isRead) {
+      setIsRead(otherUserID, message.id);
     }
-  }, [isSeen, message.id, user.name, message.from, message.isRead]);
+  }, [isOpen, message.id, user.name, otherUserID, message.from, message.isRead]);
 
   return user.name === message.from ? (
     <OutgoingMessage message={message} onDeleteMessage={onDeleteMessage} />

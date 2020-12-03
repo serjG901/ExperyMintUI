@@ -1,39 +1,69 @@
-import {User} from "./fetchData";
-let messagesData = [];
-
 export async function getMessages(otherUserID) {
-  const filtredMessages = messagesData.filter(
-    (msg) =>
-      (msg.from === User.currentID && msg.to === otherUserID) ||
-      (msg.from === otherUserID && msg.to === User.currentID)
-  );
-  return filtredMessages;
+  let response = await fetch("/getmessages/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify({ otherUserID })
+  });
+  if (response.ok) {
+    let json = await response.json();
+    return json.messages;
+  } else {
+    console.log("getMessages Ошибка HTTP: " + response.status);
+    return new Error("Ошибка HTTP: " + response.status);
+  }
 }
 
-export async function deleteMessage(messageID) {
-  messagesData = messagesData.filter((msg) => msg.id !== messageID);
-  return true;
+export async function deleteMessage(otherUserID, messageID) {
+  let response = await fetch(
+    "/deletemessage/",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8"
+      },
+      body: JSON.stringify({ otherUserID, messageID })
+    }
+  );
+  if (response.ok) {
+    let json = await response.json();
+    return json.status;
+  } else {
+    console.log("deleteMessage Ошибка HTTP: " + response.status);
+    return new Error("Ошибка HTTP: " + response.status);
+  }
 }
 
 export async function sendMessage(otherUserID, message, currentDate) {
-  messagesData = [
-    ...messagesData,
-    {
-      id: [otherUserID, currentDate].join(""),
-      from: User.currentID,
-      to: otherUserID,
-      text: message,
-      date: currentDate,
-      isSend: true,
-      isRead: false,
+  let response = await fetch("/sendmessage/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
     },
-  ];
-  return true;
+    body: JSON.stringify({ otherUserID, message, currentDate })
+  });
+  if (response.ok) {
+    let json = await response.json();
+    return json.status;
+  } else {
+    console.log("sendMessage Ошибка HTTP: " + response.status);
+    return new Error("Ошибка HTTP: " + response.status);
+  }
 }
 
-export async function setIsRead(messageID) {
-  messagesData = messagesData.map((msg) =>
-    msg.id === messageID ? { ...msg, isRead: true } : msg
-  );
-  return true;
+export async function setIsRead(otherUserID, messageID) {
+  let response = await fetch("/setisread/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify({ otherUserID, messageID })
+  });
+  if (response.ok) {
+    let json = await response.json();
+  } else {
+    console.log("deleteMessage Ошибка HTTP: " + response.status);
+    return new Error("Ошибка HTTP: " + response.status);
+  }
 }
