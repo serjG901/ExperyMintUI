@@ -37,7 +37,7 @@ export default function OutgoingMessage({ message, onDeleteMessage }) {
       ) : null}
       <p className="text-lg w-11/12 break-word">{message.text}</p>
       <div className={`${themeColor.colorTextExplane} text-xs text-right`}>
-        {new Date(message.date).toLocaleString()}{" "}
+        {message.date ? new Date(message.date).toLocaleString() : null}{" "}
         {message.isSend ? <>&#10003;</> : null}
         {message.isRead ? <>&#10003;</> : null}
       </div>

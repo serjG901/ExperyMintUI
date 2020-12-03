@@ -1,8 +1,8 @@
 import React from "react";
+import { AvatarProvider } from "../core/AvatarProvider";
 import Avatar from "./Avatar";
 import UserInfo from "./UserInfo";
 import StatisticOfUser from "./StatisticOfUser";
-import { AvatarProvider } from "../core/AvatarProvider";
 
 export default function Account() {
   return (

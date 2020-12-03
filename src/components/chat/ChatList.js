@@ -1,14 +1,14 @@
 import React from "react";
-import OtherUser from "./OtherUser";
-import FormSendAndShowText from "../account/FormSendAndShowText";
-import { useChatList } from "../core/ChatListProvider";
 import { useTheme } from "../core/ThemeProvider";
 import { useLanguage } from "../core/LanguageProvider";
+import { useChatList } from "../core/ChatListProvider";
+import FormSendAndShowText from "../account/FormSendAndShowText";
+import OtherUser from "./OtherUser";
 
 export default function ChatList() {
-  const chatList = useChatList();
   const themeColor = useTheme();
   const language = useLanguage();
+  const chatList = useChatList();
 
   return (
     <div>

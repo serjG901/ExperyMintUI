@@ -1,13 +1,12 @@
 import React from "react";
 import { useTheme } from "../core/ThemeProvider";
-import { useUniqueIndex } from "../core/UniqueIndexProvider";
 import { useLanguage } from "../core/LanguageProvider";
+import { useUniqueIndex } from "../core/UniqueIndexProvider";
 
 export default function UniqueIndex() {
-  const uniqueIndex = useUniqueIndex();
   const themeColor = useTheme();
   const language = useLanguage();
-
+  const uniqueIndex = useUniqueIndex();
   return (
     <div className="text-xl">
       <span className={themeColor.colorTextExplane}>

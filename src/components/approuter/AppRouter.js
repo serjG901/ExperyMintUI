@@ -6,29 +6,26 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
-import Start from "../start/Start";
-import Hello from "./Hello";
+import { useTheme } from "../core/ThemeProvider";
+import { useLanguage } from "../core/LanguageProvider";
+import { usePushUpError } from "../core/PushUpErrorProvider";
+import { usePushUp } from "../core/PushUpProvider";
+import { useLogin, useLoginSet } from "../core/LoginProvider";
+import { AccountIcon, GameIcon, ChatIcon, QuitIcon } from "./Icons";
 import Account from "../account/Account";
 import Game from "../game/Game";
 import Chat from "../chat/Chat";
-import AccountIcon from "./AccountIcon";
-import GameIcon from "./GameIcon";
-import ChatIcon from "./ChatIcon";
-import QuitIcon from "./QuitIcon";
-import { useTheme } from "../core/ThemeProvider";
-import { useLogin, useLoginSet } from "../core/LoginProvider";
-import { usePushUpError } from "../core/PushUpErrorProvider";
-import { usePushUp } from "../core/PushUpProvider";
+import Hello from "./Hello";
+import Start from "../start/Start";
 import Background from "../common/Background";
-import { useLanguage } from "../core/LanguageProvider";
 
 export default function AppRouter() {
   const themeColor = useTheme();
-  const isLogin = useLogin();
-  const setLogin = useLoginSet();
+  const language = useLanguage();
   const pushUpError = usePushUpError();
   const pushUp = usePushUp();
-  const language = useLanguage();
+  const isLogin = useLogin();
+  const setLogin = useLoginSet();
 
   const linkStyle = `
     flex-1 w-1/4
@@ -52,11 +49,7 @@ export default function AppRouter() {
 
   function handleActivePage(page) {
     setActivePage(page);
-    if (page) {
-      window.localStorage.setItem("activePage", page);
-      return;
-    }
-    window.localStorage.removeItem("activePage");
+    window.localStorage.setItem("activePage", page);
   }
 
   function handleQuit() {

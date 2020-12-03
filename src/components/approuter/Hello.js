@@ -1,16 +1,14 @@
 import React from "react";
-import AccountIcon from "./AccountIcon";
-import GameIcon from "./GameIcon";
-import ChatIcon from "./ChatIcon";
-import Copyright from "../common/Copyright";
 import { useTheme } from "../core/ThemeProvider";
-import { useUser } from "../core/UserProvider";
 import { useLanguage } from "../core/LanguageProvider";
+import { useUser } from "../core/UserProvider";
+import { AccountIcon, GameIcon, ChatIcon } from "./Icons";
+import Copyright from "../common/Copyright";
 
 export default function Hello() {
-  const user = useUser();
   const themeColor = useTheme();
   const language = useLanguage();
+  const user = useUser();
 
   const textBlockStyle = `
     ${themeColor.bgTextBlock} 
@@ -20,7 +18,9 @@ export default function Hello() {
 
   return (
     <div className="flex flex-col py-4">
-      <div className="break-word font-bold text-2xl">{`${language.hello[1]} ${user.name}${language.hello[2]}`}</div>
+      <div className="break-word font-bold text-2xl">
+        {`${language.hello[1]} ${user.name}${language.hello[2]}`}
+      </div>
       <div className="text-justify">
         <div className={textBlockStyle}>
           <p>{language.helloText[1]}</p>

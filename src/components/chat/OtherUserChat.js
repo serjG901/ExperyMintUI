@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Message from "./Message";
 import SendButton from "../common/SendButton";
 import TextareaAutosize from "react-textarea-autosize";
@@ -9,14 +9,21 @@ import {
   useMessageSet,
   useMessageForDeleteSet,
 } from "../core/ChatProvider";
+import { useUser } from "../core/UserProvider";
 
 export default function OtherUserChat({ isOpen, otherUserID }) {
   const themeColor = useTheme();
   const language = useLanguage();
+  const user = useUser();
   const chat = useChat();
   const setMessage = useMessageSet();
   const setMessageForDelete = useMessageForDeleteSet();
   const [draft, setDraft] = useState("");
+  const [localChat, setLocalChat] = useState([]);
+
+  useEffect(()=>{
+    setLocalChat(chat);
+  }, [chat]);
 
   function handleDraftChange(event) {
     setDraft(event.currentTarget.value);
@@ -29,6 +36,14 @@ export default function OtherUserChat({ isOpen, otherUserID }) {
       setDraft("");
       return;
     }
+    const localMessage = {
+      from: user.name,
+      to: otherUserID,
+      text: draft,
+      isSend: false,
+      isRead: false
+    };
+    setLocalChat([...localChat, localMessage]);
     setMessage(message);
     setDraft("");
   }
@@ -43,7 +58,7 @@ export default function OtherUserChat({ isOpen, otherUserID }) {
         {`${language.otherChat} ${otherUserID}`}
       </span>
       <div className="flex flex-col">
-        {chat.map((message) => (
+        {localChat.map((message) => (
           <Message
             isOpen={isOpen}
             key={message.date}

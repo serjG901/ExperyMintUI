@@ -1,6 +1,6 @@
 import React from "react";
-import AvatarSetDelete from "./AvatarSetDelete";
 import { useAvatar } from "../core/AvatarProvider";
+import AvatarSetDelete from "./AvatarSetDelete";
 
 export default function Avatar() {
   const avatar = useAvatar();

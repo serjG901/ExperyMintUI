@@ -9,7 +9,7 @@ export default function OtherUserManifest({ children }) {
   return (
     <div className="w-1/2">
       {children ? (
-        <p className="font-bold break-words">{children}</p>
+        <p className="font-bold break-words italic">{children}</p>
       ) : (
         <span className={`${themeColor.colorTextExplane}`}>
           {language.otherManifestDefault}

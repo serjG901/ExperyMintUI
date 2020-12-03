@@ -40,22 +40,24 @@ export const AvatarProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    setPushUp(language.updateData);
-    setAvatarToServer(avatar)
-      .then((isSave) => {
-        setPushUp(null);
-        if (isSave === true) {
-          setPushUpError(language.updateSucces);
-        } else {
-          setPushUpError(language.updateCrash);
-          setAvatar(avatarRef.current);
-        }
-      })
-      .catch((error) => {
-        setPushUp(null);
-        setPushUpError(language.failedToFetch);
-        console.log(error.message);
-      });
+    if (avatar !== avatarRef.current) {
+      setPushUp(language.updateData);
+      setAvatarToServer(avatar)
+        .then((isSave) => {
+          setPushUp(null);
+          if (isSave === true) {
+            setPushUpError(language.updateSucces);
+          } else {
+            setPushUpError(language.updateCrash);
+            setAvatar(avatarRef.current);
+          }
+        })
+        .catch((error) => {
+          setPushUp(null);
+          setPushUpError(language.failedToFetch);
+          console.log(error.message);
+        });
+    }
   }, [
     avatar,
     language.updateData,

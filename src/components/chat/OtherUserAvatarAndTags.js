@@ -31,7 +31,7 @@ export default function OtherUserAvatarAndTags({ otherUserID, tags }) {
       </div>
       <div className="w-1/2 p-4">
         {tags ? (
-          <p className="font-bold break-words">{tags}</p>
+          <p className="font-bold break-words italic">{tags}</p>
         ) : (
           <span className={`${themeColor.colorTextExplane}`}>
             {language.otherTagsDefault}

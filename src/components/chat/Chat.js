@@ -1,9 +1,9 @@
 import React from "react";
-import ChatList from "./ChatList";
-import FormSendAndShowText from "../account/FormSendAndShowText";
 import UserName from "../account/UserName";
+import FormSendAndShowText from "../account/FormSendAndShowText";
 import { OtherUsersProvider } from "../core/OtherUsersProvider";
 import { ChatListProvider } from "../core/ChatListProvider";
+import ChatList from "./ChatList";
 
 export default function Chat() {
   return (

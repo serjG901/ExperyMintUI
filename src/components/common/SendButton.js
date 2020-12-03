@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTheme } from "../core/ThemeProvider";
 import { useLanguage } from "../core/LanguageProvider";
 
-export default function SendButton({ ...props }) {
+export default function SendButton(props) {
   const themeColor = useTheme();
   const language = useLanguage();
 
@@ -24,7 +24,7 @@ export default function SendButton({ ...props }) {
   useEffect(() => animation());
 
   return (
-    <button className={`${style} ${addStyle}`} type="submit">
+    <button type="submit" {...props} className={`${style} ${addStyle}`}>
       {props.children ? props.children : language.sendButtonDefault}
     </button>
   );

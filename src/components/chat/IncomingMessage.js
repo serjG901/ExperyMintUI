@@ -37,7 +37,7 @@ export default function IncomingMessage({ message, onDeleteMessage }) {
       ) : null}
       <p className="text-lg break-word">{message.text}</p>
       <div className={`${themeColor.colorTextExplane} text-xs text-left`}>
-        {new Date(message.date).toLocaleString()}{" "}
+        {message.date ? new Date(message.date).toLocaleString() : null}{" "}
       </div>
     </div>
   );

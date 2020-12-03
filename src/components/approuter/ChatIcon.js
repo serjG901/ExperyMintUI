@@ -1,5 +1,5 @@
 import React from "react";
-export default function AccountIcon(){
+export default function ChatIcon(){
   return (<svg
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"

@@ -1,43 +1,26 @@
 import React from "react";
 import { useTheme } from "../core/ThemeProvider";
-import { useAvatar, useAvatarSet } from "../core/AvatarProvider";
-import Resizer from "react-image-file-resizer";
 import { useLanguage } from "../core/LanguageProvider";
+import { useAvatar, useAvatarSet } from "../core/AvatarProvider";
+import {resizeImage} from "./resizeImage";
 
 export default function AvatarSetDelete() {
   const themeColor = useTheme();
   const language = useLanguage();
-
   const avatar = useAvatar();
   const setAvatar = useAvatarSet();
 
   const styleLikeButton = `
-  transition-all 
-  duration-1000
-  mx-4 py-2 px-4 
-  rounded shadow-md
-  cursor-pointer
-  focus:outline-none 
-  focus:shadow-outline
-  ${themeColor.bgButton}
-  ${themeColor.hbgButton}
-  `;
-
-  const resizeImage = (file) =>
-    new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        400,
-        400,
-        "PNG",
-        50,
-        0,
-        (uri) => {
-          resolve(uri);
-        },
-        "base64"
-      );
-    });
+    transition-all 
+    duration-1000
+    mx-4 py-2 px-4 
+    rounded shadow-md
+    cursor-pointer
+    focus:outline-none 
+    focus:shadow-outline
+    ${themeColor.bgButton}
+    ${themeColor.hbgButton}
+    `;
 
   async function handleSetAvatar(event) {
     const image = event.currentTarget.files[0];

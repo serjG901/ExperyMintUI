@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useTheme } from "../core/ThemeProvider";
-import OtherUserChat from "./OtherUserChat";
-import OtherUserStatistic from "./OtherUserStatistic";
-import OtherUserAvatarAndTags from "./OtherUserAvatarAndTags";
+import { useLanguage } from "../core/LanguageProvider";
 import OtherUserName from "./OtherUserName";
 import OtherUserManifest from "./OtherUserManifest";
-import { useLanguage } from "../core/LanguageProvider";
-import {ChatProvider} from "../core/ChatProvider";
+import OtherUserStatistic from "./OtherUserStatistic";
+import OtherUserAvatarAndTags from "./OtherUserAvatarAndTags";
+import OtherUserChat from "./OtherUserChat";
+
+import { ChatProvider } from "../core/ChatProvider";
 
 export default function OtherUser({
   otherUserID,
@@ -15,7 +16,7 @@ export default function OtherUser({
   mistruth,
   manifest,
   tags,
-  lastUpdate
+  lastUpdate,
 }) {
   const themeColor = useTheme();
   const language = useLanguage();

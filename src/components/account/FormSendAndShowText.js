@@ -1,15 +1,15 @@
 import React, { useState } from "react";
+import { useTheme } from "../core/ThemeProvider";
+import { useLanguage } from "../core/LanguageProvider";
+import { useUser, useUserSet } from "../core/UserProvider";
 import TextInput from "../common/TextInput";
 import SendButton from "../common/SendButton";
-import { useTheme } from "../core/ThemeProvider";
-import { useUser, useUserSet } from "../core/UserProvider";
-import { useLanguage } from "../core/LanguageProvider";
 
 export default function FormSendAndShowText({ nameProperty }) {
-  const user = useUser();
-  const setUser = useUserSet();
   const themeColor = useTheme();
   const language = useLanguage();
+  const user = useUser();
+  const setUser = useUserSet();
 
   const [statusInput, setStatusInput] = useState(false);
   const [draftInput, setDraftInput] = useState("");

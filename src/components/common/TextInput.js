@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function TextInput({ ...props }) {
+export default function TextInput(props) {
   const style = `
       w-full shadow
       transition-all 
@@ -24,11 +24,9 @@ export default function TextInput({ ...props }) {
     <input
       className={`${style} ${addStyle}`}
       id={props.nameProperty}
-      type={props.type || "text"}
-      required={props.required || false}
-      maxLength={props.maxLength || "128"}
-      onChange={props.onChange}
-      value={props.value}
+      type="text"
+      maxLength="128"
+      {...props}
     />
   );
 }
