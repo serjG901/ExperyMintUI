@@ -1,7 +1,7 @@
 # ExperyMintUI
 CRA + tailwindcss + vanilla-tilt + react-router <-> simple js fetch
 
-UI for ExperyMint App (url - )
+UI for ExperyMint App (url - https://github.com/serjG901/ExperyMintServer.git)
 
 Adaptive flex design, 3 main page - account, game, closest people.
 
