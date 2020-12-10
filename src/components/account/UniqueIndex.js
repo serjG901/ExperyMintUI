@@ -13,7 +13,7 @@ export default function UniqueIndex() {
         {language.uniqueIndex}:
       </span>{" "}
       <span className={`${themeColor.colorTextData} font-bold`}>
-        {uniqueIndex || 0}
+        {uniqueIndex.result}
       </span>
     </div>
   );

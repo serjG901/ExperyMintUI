@@ -1,193 +1,115 @@
-export async function isNameFree(name) {
-  const response = await fetch("/isnamefree/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify({ name: name })
-  });
+export async function checkUserId(userId) {
+  const response = await fetch(`/userid/${userId}`);
   if (response.ok) {
-    const isNameFree = await response.json();
-    return isNameFree.status;
+    const json = await response.json();
+    return json.id;
   } else {
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }
 
-export async function login(user) {
-  const response = await fetch("/login/", {
-    method: "POST",
+export async function addUser(newUser) {
+  const response = await fetch("/users/", {
+    method: "PUT",
     headers: {
-      "Content-Type": "application/json;charset=utf-8"
+      "Content-Type": "application/json;charset=utf-8",
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(newUser),
   });
   if (response.ok) {
-    const login = await response.json();
-    return login.isLogin;
+    const json = await response.json();
+    return json.user;
   } else {
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
+  }
+}
+
+export async function login(loginInfo) {
+  const response = await fetch("/session/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(loginInfo),
+  });
+  if (response.ok) {
+    const json = await response.json();
+    return json.user;
+  } else {
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }
 
 export async function isLoggedIn() {
-  const response = await fetch("/isloggedin/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    }
-  });
+  const response = await fetch("/session/");
   if (response.ok) {
-    const isLoggedIn = await response.json();
-    return isLoggedIn.status;
+    const json = await response.json();
+    return json.authUser;
   } else {
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }
 
 export async function toLoggedOut() {
-  const response = await fetch("/tologgedout/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    }
+  const response = await fetch("/session/", {
+    method: "DELETE",
   });
   if (response.ok) {
-    const toLoggedOut = await response.json();
-    return toLoggedOut.status;
+    const json = await response.json();
+    return json.logOutUser;
   } else {
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }
 
-export async function setUser(user) {
-  const response = await fetch("/setuser/", {
+export async function updateUser(userUpdate) {
+  const response = await fetch(`/users/${userUpdate._id}`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json;charset=utf-8"
+      "Content-Type": "application/json;charset=utf-8",
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(userUpdate),
   });
   if (response.ok) {
-    const setUser = await response.json();
-    return setUser.status;
+    const json = await response.json();
+    return json.updatedUser;
   } else {
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }
 
-export async function getUser() {
-  const response = await fetch("/getuser/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    }
-  });
+export async function getAvatar(id) {
+  const response = await fetch(`/avatars/${id}`);
   if (response.ok) {
-    const user = await response.json();
-    return user;
+    const json = await response.json();
+    return json.avatar;
   } else {
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }
 
-export async function updateUser(updateUser) {
-  const response = await fetch("/updateuser/", {
-    method: "POST",
+export async function uploadAvatar(id, avatar) {
+  const response = await fetch(`/avatars/${id}`, {
+    method: "PUT",
     headers: {
-      "Content-Type": "application/json;charset=utf-8"
+      "Content-Type": "application/json;charset=utf-8",
     },
-    body: JSON.stringify(updateUser)
+    body: JSON.stringify({ avatar }),
   });
   if (response.ok) {
-    const user = await response.json();
-    return user.status;
+    const json = await response.json();
+    return json.updatedAvatar;
   } else {
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }
 
-export async function setAvatarToServer(newAvatar) {
-  const response = await fetch("/setavatarserve/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify({avatar: newAvatar})
-  });
+export async function people(filter) {
+  const response = await fetch(`/people/${filter}`);
   if (response.ok) {
-    const isSaved = await response.json();
-    return isSaved.status;
+    const json = await response.json();
+    return json.people;
   } else {
-    return new Error("Ошибка HTTP: " + response.status);
-  }
-}
-
-export async function getAvatar() {
-  const response = await fetch("/getavatar/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    }
-  });
-  if (response.ok) {
-    const userAvatar = await response.json();
-    return userAvatar.avatar;
-  } else {
-    return new Error("Ошибка HTTP: " + response.status);
-  }
-}
-
-export async function getOtherUsers(filter) {
-  const response = await fetch(
-    "/getotherusers/",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8"
-      },
-      body: JSON.stringify({ filter })
-    }
-  );
-  if (response.ok) {
-    const otherUsers = await response.json();
-    return otherUsers;
-  } else {
-    return new Error("Ошибка HTTP: " + response.status);
-  }
-}
-
-export async function getOtherUser(otherUserID) {
-  const response = await fetch(
-    "/getotheruser/",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8"
-      },
-      body: JSON.stringify({ otherUserID })
-    }
-  );
-  if (response.ok) {
-    const otherUser = await response.json();
-    return otherUser;
-  } else {
-    return new Error("Ошибка HTTP: " + response.status);
-  }
-}
-
-export async function getOtherAvatar(otherUserID) {
-  const response = await fetch("/getotheravatar/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify({otherUserID})
-  });
-  if (response.ok) {
-    const userAvatar = await response.json();
-    return userAvatar.avatar;
-  } else {
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }

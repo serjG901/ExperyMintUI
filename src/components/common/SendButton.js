@@ -7,9 +7,14 @@ export default function SendButton(props) {
   const language = useLanguage();
 
   const style = `
-  transition-all duration-1000
-  mb-4 mx-4 py-2 px-4 
-  rounded cursor-pointer
+  transition-all 
+  duration-1000
+  mb-4 
+  mx-4 
+  py-2 
+  px-4 
+  rounded 
+  cursor-pointer
   focus:outline-none 
   focus:shadow-outline
   ${themeColor.colorTextMain}
@@ -17,11 +22,11 @@ export default function SendButton(props) {
 
   const [addStyle, setAddStyle] = useState(`shadow-none bg-transparent`);
 
-  function animation() {
-    setAddStyle(`shadow-md ${themeColor.bgButton} ${themeColor.hbgButton}`);
-  }
-
-  useEffect(() => animation());
+  useEffect(
+    () =>
+      setAddStyle(`shadow-md ${themeColor.bgButton} ${themeColor.hbgButton}`),
+    [themeColor]
+  );
 
   return (
     <button type="submit" {...props} className={`${style} ${addStyle}`}>

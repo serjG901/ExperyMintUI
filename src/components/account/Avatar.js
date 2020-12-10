@@ -4,7 +4,6 @@ import AvatarSetDelete from "./AvatarSetDelete";
 
 export default function Avatar() {
   const avatar = useAvatar();
-
   return (
     <div className="p-4">
       {avatar ? (

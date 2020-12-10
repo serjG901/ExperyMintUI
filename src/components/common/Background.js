@@ -6,8 +6,11 @@ export default function Background() {
   return (
     <div
       className={`
-        top-0 back fixed
-        h-screen w-screen
+        top-0 
+        back 
+        fixed
+        h-screen 
+        w-screen
         ${themeColor.bgApp}
         `}
     ></div>

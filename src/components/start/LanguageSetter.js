@@ -1,14 +1,13 @@
 ﻿import React from "react";
-import LanguageSample from "./LanguageSample";
 import { languageText } from "../core/LanguageProvider";
-
-const languageSamples = Object.keys(languageText);
+import LanguageSample from "./LanguageSample";
 
 export default function LanguageSetter() {
+  const languageNames = Object.keys(languageText);
   return (
     <div className="flex justify-center h-6 w-32 m-4">
-      {languageSamples.map((languageSample) => (
-        <LanguageSample key={languageSample} languageSample={languageSample} />
+      {languageNames.map((languageName) => (
+        <LanguageSample key={languageName} languageName={languageName} />
       ))}
     </div>
   );

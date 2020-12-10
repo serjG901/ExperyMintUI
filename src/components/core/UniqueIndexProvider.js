@@ -1,64 +1,54 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  getAllResultsReduce,
-  getUniqumIndex,
-} from "../../lib/getIndexFunctions";
-import { useUser } from "./UserProvider";
-import { useOtherUsers } from "./OtherUsersProvider";
+import { useLanguage } from "../core/LanguageProvider";
 import { usePushUpSet } from "../core/PushUpProvider";
 import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
-import { useLanguage } from "../core/LanguageProvider";
+import { useResults } from "./UserProvider";
+import { usePeople } from "./PeopleProvider";
+import { computingUniqueIndex } from "../../lib/computingUniqueIndex";
 
 const UniqueIndexContext = React.createContext();
 
 export const useUniqueIndex = () => {
-  return useContext(UniqueIndexContext).uniqueIndex;
+  return useContext(UniqueIndexContext);
 };
 
 export function UniqueIndexProvider({ children }) {
-  const user = useUser();
-  const otherUsers = useOtherUsers();
+  const language = useLanguage();
   const setPushUp = usePushUpSet();
   const setPushUpError = usePushUpErrorSet();
-  const language = useLanguage();
+  const results = useResults();
+  const people = usePeople();
 
-  const [uniqueIndex, setUniqueIndex] = useState(0);
+  const [uniqueIndex, setUniqueIndex] = useState({
+    result: 0,
+    forImage: {},
+    full: {},
+  });
 
   useEffect(() => {
-    let isSubscribed = true;
-    if (user && otherUsers) {
-      setPushUp(language.computingAll);
-      getAllResultsReduce(otherUsers)
-        .then((allResults) => {
-          setPushUp(language.computingUnique);
-          return getUniqumIndex(user.results, allResults);
-        })
-        .then((uniqueIndex) => {
+    if (people.length !== 0) {
+      setPushUp(language.computingUnique);
+      computingUniqueIndex(results, people)
+        .then((unique) => {
           setPushUp(null);
-          isSubscribed && setUniqueIndex(uniqueIndex);
+          if (unique !== null) setUniqueIndex(unique);
         })
         .catch((error) => {
           setPushUp(null);
           setPushUpError(language.failedToFetch);
           console.log(error.message);
         });
+    } else {
+      setUniqueIndex({
+        result: 100,
+        forImage: {},
+        full: {},
+      });
     }
-    return () => {
-      isSubscribed = false;
-      setPushUp(null);
-    };
-  }, [
-    user,
-    otherUsers,
-    setPushUp,
-    setPushUpError,
-    language.computingAll,
-    language.computingUnique,
-    language.failedToFetch,
-  ]);
+  }, [results, people, setPushUp, setPushUpError, language]);
 
   return (
-    <UniqueIndexContext.Provider value={{ uniqueIndex }}>
+    <UniqueIndexContext.Provider value={uniqueIndex}>
       {children}
     </UniqueIndexContext.Provider>
   );

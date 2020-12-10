@@ -1,23 +1,23 @@
 import React from "react";
 import SimpleIndex from "./SimpleIndex";
-import { OtherUsersProvider } from "../core/OtherUsersProvider";
+import { PeopleProvider } from "../core/PeopleProvider";
 import { UniqueIndexProvider } from "../core/UniqueIndexProvider";
 import UniqueIndex from "./UniqueIndex";
 import FilterStatus from "./FilterStatus";
-import FormSendAndShowText from "./FormSendAndShowText";
+import SetAndShowProperty from "./SetAndShowProperty";
 
 export default function StatisticOfUser() {
   return (
     <div className="w-1/2 pb-8">
-      <SimpleIndex nameProperty="score" />
-      <SimpleIndex nameProperty="mistruth" />
-      <OtherUsersProvider>
+      <SimpleIndex property="score" />
+      <SimpleIndex property="mistruth" />
+      <PeopleProvider>
         <UniqueIndexProvider>
           <UniqueIndex />
         </UniqueIndexProvider>
-      </OtherUsersProvider>
+      </PeopleProvider>
       <FilterStatus />
-      <FormSendAndShowText nameProperty="filter" />
+      <SetAndShowProperty property="filter" />
     </div>
   );
 }

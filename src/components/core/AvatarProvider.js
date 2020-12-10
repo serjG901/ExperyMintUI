@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { getAvatar, setAvatarToServer } from "../../lib/fetchData";
+import { useLanguage } from "../core/LanguageProvider";
 import { usePushUpSet } from "../core/PushUpProvider";
 import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
-import { useLanguage } from "../core/LanguageProvider";
+import { useUser } from "../core/UserProvider";
+import { getAvatar, uploadAvatar } from "../../lib/fetchData";
 
 const AvatarContext = React.createContext();
 
@@ -15,66 +16,51 @@ export const useAvatarSet = () => {
 };
 
 export const AvatarProvider = ({ children }) => {
+  const language = useLanguage();
   const setPushUp = usePushUpSet();
   const setPushUpError = usePushUpErrorSet();
-  const language = useLanguage();
+  const user = useUser();
   const [avatar, setAvatar] = useState(null);
-  const avatarRef = useRef();
+  const avatarRef = useRef(null);
 
   useEffect(() => {
     let isSubscribe = true;
-    setPushUp(language.refreshData);
-    getAvatar()
-      .then((avatarOnServer) => {
-        setPushUp(null);
-        if (avatarOnServer) {
-          isSubscribe && setAvatar(avatarOnServer);
-        }
-      })
-      .catch((error) => {
-        setPushUp(null);
-        isSubscribe && setPushUpError(language.failedToFetch);
-        console.log(error.message);
-      });
-    return () => {
-      isSubscribe = false;
-    };
-  }, [language.refreshData, language.failedToFetch, setPushUp, setPushUpError]);
-
-  useEffect(() => {
-    avatarRef.current = avatar;
-  });
-
-  useEffect(() => {
-    let isSubscribe = true;
-    setPushUp(language.updateData);
-    setAvatarToServer(avatar)
-      .then((isSave) => {
-        setPushUp(null);
-        if (isSave === true) {
+    if (user && avatar === null && avatarRef.current === null) {
+      setPushUp(language.refreshData);
+      getAvatar(user._id)
+        .then((avatarInDb) => {
+          setPushUp(null);
+          if (avatarInDb !== null) {
+            avatarRef.current = avatarInDb;
+            isSubscribe && setAvatar(avatarInDb);
+          }
+        })
+        .catch((error) => {
+          setPushUp(null);
+          isSubscribe && setPushUpError(language.failedToFetch);
+          console.log(error.message);
+        });
+    }
+    if (avatar !== avatarRef.current) {
+      setPushUp(language.updateData);
+      uploadAvatar(user._id, avatar)
+        .then((updatedAvatar) => {
+          setPushUp(null);
+          avatarRef.current = updatedAvatar;
+          isSubscribe && setAvatar(updatedAvatar);
           isSubscribe && setPushUpError(language.updateSucces);
-        } else {
-          isSubscribe && setPushUpError(language.updateCrash);
+        })
+        .catch((error) => {
+          setPushUp(null);
           isSubscribe && setAvatar(avatarRef.current);
-        }
-      })
-      .catch((error) => {
-        setPushUp(null);
-        isSubscribe && setPushUpError(language.failedToFetch);
-        console.log(error.message);
-      });
+          isSubscribe && setPushUpError(language.updateCrash);
+          console.log(error.message);
+        });
+    }
     return () => {
       isSubscribe = false;
     };
-  }, [
-    avatar,
-    language.updateData,
-    language.updateSucces,
-    language.updateCrash,
-    language.failedToFetch,
-    setPushUp,
-    setPushUpError,
-  ]);
+  }, [user._id, avatar, language, setPushUp, setPushUpError]);
 
   return (
     <AvatarContext.Provider value={{ avatar, setAvatar }}>

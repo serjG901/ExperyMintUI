@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 
 export default function TextInput(props) {
   const style = `
-      w-full shadow
+      w-full 
+      shadow
       transition-all 
       duration-1000
       text-center
@@ -14,16 +15,12 @@ export default function TextInput(props) {
   `;
   const [addStyle, setAddStyle] = useState(`opacity-0`);
 
-  function animation() {
-    setAddStyle(`opacity-100 mb-4 py-2 px-2`);
-  }
-
-  useEffect(() => animation());
+  useEffect(() => setAddStyle(`opacity-100 mb-4 py-2 px-2`), []);
 
   return (
     <input
       className={`${style} ${addStyle}`}
-      id={props.nameProperty}
+      id={props.property}
       type="text"
       maxLength="128"
       {...props}

@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from "react";
 import Tilt from "./Tilt";
 import { useTheme } from "../core/ThemeProvider";
-import { useUser, useUserSet } from "../core/UserProvider";
-import StatisticOfUser from "../account/StatisticOfUser";
-import { getRandomImage } from "./imageForGame";
 import { useLanguage } from "../core/LanguageProvider";
+import { useUser, useUserSet } from "../core/UserProvider";
+import { getRandomImage } from "./imageForGame";
+import StatisticOfUser from "../account/StatisticOfUser";
 
 export default function Game() {
   const themeColor = useTheme();
+  const language = useLanguage();
   const user = useUser();
   const setUser = useUserSet();
-  const language = useLanguage();
 
   const styleButton = `
     transition-all 
     duration-1000
-    flex-1 text-2xl
-    mb-4 mx-4 py-2 px-4
-    rounded shadow-md 
+    flex-1 
+    text-2xl
+    mb-4 
+    mx-4 
+    py-2 
+    px-4
+    rounded 
+    shadow-md 
     focus:outline-none 
     focus:shadow-outline
     `;
@@ -60,7 +65,7 @@ export default function Game() {
       ...user,
       mistruth: mistruth + addMistruth,
       score,
-      results: { ...user.results, [image]: choice }
+      results: { ...user.results, [image]: choice },
     });
     setTimeout(() => getNewRandomImage(), 2000);
   }

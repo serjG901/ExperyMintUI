@@ -2,7 +2,7 @@ import React from "react";
 import { useTheme } from "../core/ThemeProvider";
 import { useLanguage } from "../core/LanguageProvider";
 import { useUser } from "../core/UserProvider";
-import { AccountIcon, GameIcon, ChatIcon } from "./Icons";
+import { AccountIcon, GameIcon, ClosestPeopleIcon } from "./Icons";
 import Copyright from "../common/Copyright";
 
 export default function Hello() {
@@ -11,9 +11,9 @@ export default function Hello() {
   const user = useUser();
 
   const textBlockStyle = `
+    p-4
     ${themeColor.bgTextBlock} 
     ${themeColor.colorTextExplane}
-    p-4
     `;
 
   return (
@@ -46,7 +46,7 @@ export default function Hello() {
         <br />
         <div className={textBlockStyle}>
           <div className="flex justify-center">
-            <ChatIcon />
+            <ClosestPeopleIcon />
           </div>
           <p>{language.helloText[9]}</p>
           <p>{language.helloText[10]}</p>

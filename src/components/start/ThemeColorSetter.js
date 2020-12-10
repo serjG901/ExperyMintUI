@@ -1,13 +1,12 @@
 import React from "react";
 import { useTheme, themeColorStyle } from "../core/ThemeProvider";
-import ThemeColorSample from "./ThemeColorSample";
 import { useLanguage } from "../core/LanguageProvider";
-
-const themeColors = Object.keys(themeColorStyle);
+import ThemeColorSample from "./ThemeColorSample";
 
 export default function ThemeColorSetter() {
   const themeColor = useTheme();
   const language = useLanguage();
+  const themeColors = Object.keys(themeColorStyle);
 
   return (
     <div className="flex flex-col justify-center m-4">

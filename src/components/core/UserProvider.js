@@ -1,9 +1,14 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { useLogin } from "./LoginProvider";
-import { getUser, updateUser, toLoggedOut } from "../../lib/fetchData";
+import { useLanguage } from "../core/LanguageProvider";
 import { usePushUpSet } from "../core/PushUpProvider";
 import { usePushUpErrorSet } from "../core/PushUpErrorProvider";
-import { useLanguage } from "../core/LanguageProvider";
+import {
+  addUser,
+  login,
+  updateUser,
+  toLoggedOut,
+  isLoggedIn,
+} from "../../lib/fetchData";
 
 const UserContext = React.createContext();
 
@@ -11,84 +16,166 @@ export const useUser = () => {
   return useContext(UserContext).user;
 };
 
+export const useFilter = () => {
+  return useContext(UserContext).filter;
+};
+
+export const useResults = () => {
+  return useContext(UserContext).results;
+};
+
 export const useUserSet = () => {
   return useContext(UserContext).setUser;
 };
 
+export const useSignUp = () => {
+  return useContext(UserContext).signUp;
+};
+
+export const useSignIn = () => {
+  return useContext(UserContext).signIn;
+};
+
+export const useLogOut = () => {
+  return useContext(UserContext).logOut;
+};
+
+export const useCheckSession = () => {
+  return useContext(UserContext).checkSession;
+};
+
 export const UserProvider = ({ children }) => {
-  const isLogin = useLogin();
+  const language = useLanguage();
   const setPushUp = usePushUpSet();
   const setPushUpError = usePushUpErrorSet();
-  const language = useLanguage();
 
-  const [user, setUser] = useState({});
-  const userRef = useRef();
+  const [user, setUser] = useState(null);
+  const [filter, setFilter] = useState("");
+  const [results, setResults] = useState("");
+  const userRef = useRef(null);
 
   useEffect(() => {
-    if (isLogin === true) {
-      setPushUp(language.refreshData);
-      console.log("getuser");
-      getUser()
-        .then((userData) => {
-          setPushUp(null);
-          userRef.current = userData;
-          setUser(userData);
-        })
-        .catch((error) => {
-          setPushUp(null);
-          setPushUpError(language.failedToFetch);
-          console.log(error.message);
-        });
-    } else {
-      if (Object.keys(user).length !== 0) {
-        setPushUp(language.toLoggedOut);
-        toLoggedOut()
-          .then((isLoggedOut) => {
-            setPushUp(null);
-            if (isLoggedOut === true) {
-              setPushUpError(language.toLoggedOutSucces);
-            }
-          })
-          .catch((error) => {
-            setPushUp(null);
-            setPushUpError(language.failedToFetch);
-            console.log(error.message);
-          });
-      }
+    if (user) {
+      setFilter(user.filter);
+      setResults(user.results);
     }
-  }, [isLogin, setPushUp, setPushUpError, language]);
+  }, [user]);
 
   useEffect(() => {
-    if (Object.keys(user).length !== 0 && user !== userRef.current) {
+    if (
+      user !== null &&
+      userRef.current !== null &&
+      JSON.stringify(user) !== JSON.stringify(userRef.current)
+    ) {
       setPushUp(language.updateData);
-      updateUser({ ...user, lastUpdate: Date.now() })
-        .then((userOnServer) => {
+      updateUser(user)
+        .then((updatedUser) => {
           setPushUp(null);
-          if (userOnServer === true) {
+          if (updatedUser !== null) {
+            userRef.current = user;
             setPushUpError(language.updateSucces);
           } else {
-            setPushUpError(language.updateCrash);
             setUser(userRef.current);
+            setPushUpError(language.updateCrash);
           }
         })
         .catch((error) => {
           setPushUp(null);
           setPushUpError(language.failedToFetch);
+          setUser(userRef.current);
           console.log(error.message);
         });
     }
-  }, [
-    user,
-    language.updateData,
-    language.updateSucces,
-    language.updateCrash,
-    language.failedToFetch,
-    setPushUp,
-    setPushUpError,
-  ]);
+  }, [user, setPushUp, setPushUpError, language]);
+
+  async function checkSession() {
+    setPushUp(language.loginConnect);
+    try {
+      const authUser = await isLoggedIn();
+      setPushUp(null);
+      if (authUser !== null) {
+        userRef.current = authUser;
+        setUser(authUser);
+      } else {
+        setPushUpError(language.failedLoginConnect);
+      }
+    } catch (error) {
+      setPushUp(null);
+      setPushUpError(language.failedToFetch);
+      console.log(error.message);
+    }
+  }
+
+  async function signUp({ id, password }) {
+    setPushUp(language.loginConnect);
+    try {
+      const user = await addUser({ id, password });
+      setPushUp(null);
+      if (user !== null) {
+        userRef.current = user;
+        setUser(user);
+      } else {
+        setPushUpError(language.failedLoginConnect);
+      }
+    } catch (error) {
+      setPushUp(null);
+      setPushUpError(language.failedToFetch);
+      console.log(error.message);
+    }
+  }
+
+  async function signIn({ id, password }) {
+    setPushUp(language.loginConnect);
+    try {
+      const user = await login({ id, password });
+      setPushUp(null);
+      if (user !== null) {
+        userRef.current = user;
+        setUser(user);
+        return user;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      setPushUp(null);
+      setPushUpError(language.failedToFetch);
+      console.log(error.message);
+    }
+  }
+
+  async function logOut() {
+    setPushUp(language.toLoggedOut);
+    try {
+      const logOutUser = await toLoggedOut();
+      setPushUp(null);
+      if (logOutUser === null) {
+        userRef.current = null;
+        setUser(null);
+        setPushUpError(language.toLoggedOutSucces);
+      } else {
+        setPushUpError(language.toLoggedOutCrash);
+      }
+    } catch (error) {
+      setPushUp(null);
+      setPushUpError(language.failedToFetch);
+      setUser(userRef.current);
+      console.log(error.message);
+    }
+  }
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{
+        user,
+        filter,
+        results,
+        setUser,
+        signUp,
+        signIn,
+        logOut,
+        checkSession,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

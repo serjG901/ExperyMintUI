@@ -34,7 +34,7 @@ export const languageText = {
     failedToFetch: "Няма падключэння да сервера",
     isNameFree: "Правяраем імя",
     loginConnect: "Падключэнне...",
-    failedloginConnect: "Патрабуецца ўваход",
+    failedLoginConnect: "Патрабуецца ўваход",
     toLoggedOut: "Выходзім з систэмы...",
     toLoggedOutSucces: "Выйшлі з сістемы",
     toLoggedOutCrash: "Не атрымалася выйсці",
@@ -43,27 +43,27 @@ export const languageText = {
     loginLabelName: {
       1: "Унікальнае імя",
       2: "Добрае новае імя",
-      3: "Гэта імя занята"
+      3: "Гэта імя занята",
     },
     loginLabelPassword: {
       1: "Пароль",
-      2: "Пароль няправільны"
+      2: "Пароль няправільны",
     },
     loginButton: "Увайсці",
     languageSetter: "Задайце мову",
     languageSetterSample: {
       1: "Задаць",
-      2: "мову"
+      2: "мову",
     },
     languageName: {
       by: "беларускую",
       en: "англійскую",
-      ru: "рускую"
+      ru: "рускую",
     },
     colorSetter: "Задайце каляровую тэму",
     colorSetterSample: {
       1: "Задаць",
-      2: "тэму"
+      2: "тэму",
     },
     themeName: {
       red: "чырвоную",
@@ -81,13 +81,17 @@ export const languageText = {
       bee: "пчаліную",
       glam: "гламурную",
       fruit: "фруктовую",
-      mint: "мятную"
+      mint: "мятную",
     },
     sendButtonDefault: "Адправіць",
     formExplane: "Націсніце, каб змяніць",
-    formTags: "тэгі",
-    formFilter: "фільтр",
-    formManifest: "маніфест",
+    formProperty: {
+      tags: "тэгі",
+      filter: "фільтр",
+      manifest: "маніфест",
+      name: "імя"
+    },
+    changeName: "Вы можаце ўсталяваць любое імя, але запомніце сваё ўнікальнае імя для ўваходу",
     refreshData: "Загружаем вашыя дадзеныя...",
     updateData: "Абнаўляем вашыя дадзеныя...",
     computingAll: "Вылічаем вынікі ўсіх карыстальнікаў...",
@@ -106,8 +110,10 @@ export const languageText = {
     deleteAvatar: "X",
     filterStatus: "адфільтравана па",
     filterStatusDefault: "ўсім",
-    simpleIndexScore: "лік",
-    simpleIndexMistruth: "пераменлівы",
+    simpleIndex: {
+      score: "лік",
+      mistruth: "зменлівы",
+    },
     uniqueIndex: "унікальны",
     linkAccount: "Да свайго акаўнта",
     linkGame: "Да гульні",
@@ -115,22 +121,22 @@ export const languageText = {
     linkQuit: "Выйсці",
     hello: {
       1: "Вітаю",
-      2: "!"
+      2: "!",
     },
     helloText: {
       1: "Праходзьце нашу гульню і знаходзьце блізкіх вам людзей.",
       2: "Матывацыя прыкладання - знайсці суразмоўцы з падобнымі поглядамі і кампанію для агульнай справы.",
       3: "Укладка вашага акаўнта, у якім вы можаце даведацца вынік праходжання гульні, усталяваць свой аватар, пазначыць інфармацыю аб сабе ў поле тэгаў, каб карыстальнікі маглі вас знайсці, ужыўшы фільтр.",
       4: "Лік - гэта агульная колькасць вашых адказаў у гульні.",
-      5: "Пераменлівы - гэта колькасць змены вашых адказаў пры праходжанні гульні.",
+      5: "Зменлівы - гэта колькасць змены вашых адказаў пры праходжанні гульні.",
       6: "Унікальны - працэнт унікальнасці вашага выніку ў параўнанні з агульным вынікам карыстальнікаў, адсеяных адносна ўсталяванага фільтра.",
       7: "Укладка гульні, пры праходжанні якой прыкладанне вызначае працэнт унікальнасці вашага выніку у параўнанні з астатнімі карыстальнікамі.",
       8: "Вынік гульні, і чым больш вы яе пройдзеце, дапамагае знаходзіць карыстальнікаў, што найбольш блізкія да вашага выніку.",
-      9: "Укладка чата, дзе вы пабачыце спіс карыстальнікаў прыкладання, адсартаваных па паказчыку, роўнаму адсотку супадзення вашых вынікаў, колькасці параўноўваных малюнкаў і значэнні устаноўленага фільтра.",
-      10: "У чаце вы можаце пакінуць свой маніфест, што будзе бачны ўсім карыстальнікам.",
+      9: "Укладка найбліжэйшых асоб, дзе вы пабачыце спіс карыстальнікаў прыкладання, адсартаваных па паказчыку, роўнаму адсотку супадзення вашых вынікаў, колькасці параўноўваных малюнкаў і значэнні устаноўленага фільтра.",
+      10: "Тут вы можаце пакінуць свой маніфест, што будзе бачны ўсім карыстальнікам.",
       11: "Маніфест іншых карыстальнікаў вы можаце ўбачыць у спісе чата справа ад імя карыстальніка.",
       12: "Націснуўшы на карыстальніка ў спісе вы зможаце ўбачыць дадатковую інфармацыю пра яго, а таксама адправіць яму паведамленне.",
-      13: "Знайдзіце сапраўды блізкіх вам людзей!"
+      13: "Знайдзіце сапраўды блізкіх вам людзей!",
     },
     closestPeople: "Блізкія людзі",
     openUserInfo: "Націсніце, каб адкрыць інфармацыю пра карыстальніка",
@@ -140,21 +146,21 @@ export const languageText = {
     otherManifestDefault: "маніфест",
     otherCloseness: "блізкасць",
     otherCompared: "параўналі карціны",
-    otherMistruth: "пераменлівы",
+    otherMistruth: "зменлівы",
     otherChat: "гутарка з",
     messageFor: "паведамленне для",
     otherMessagesRefresh: "Загружаем паведамленні...",
     otherMessageSend: "Адпраўляем паведамленне...",
     otherMessageSendCrash: "Паведамленне не адпраўлена! Паспрабуйце яшчэ.",
     otherMessageDelete: "Выдаляем паведамленне...",
-    otherMessageDeleteCrash: "Паведамленне не выдалена! Паспрабуйце яшчэ."
+    otherMessageDeleteCrash: "Паведамленне не выдалена! Паспрабуйце яшчэ.",
   },
   en: {
     name: "en",
     failedToFetch: "No connection to server",
     isNameFree: "Checking name",
     loginConnect: "Connecting...",
-    failedloginConnect: "Login required",
+    failedLoginConnect: "Login required",
     toLoggedOut: "Logging out...",
     toLoggedOutSucces: "Logged out",
     toLoggedOutCrash: "Failed to log out",
@@ -163,27 +169,27 @@ export const languageText = {
     loginLabelName: {
       1: "Unique name",
       2: "Good new name",
-      3: "This name is occupied"
+      3: "This name is occupied",
     },
     loginLabelPassword: {
       1: "Password",
-      2: "Password is wrong"
+      2: "Password is wrong",
     },
     loginButton: "Sign in",
     languageSetter: "Set language",
     languageSetterSample: {
       1: "Set",
-      2: "language"
+      2: "language",
     },
     languageName: {
       by: "belarusian",
       en: "english",
-      ru: "russian"
+      ru: "russian",
     },
     colorSetter: "Set color theme",
     colorSetterSample: {
       1: "Set",
-      2: "theme"
+      2: "theme",
     },
     themeName: {
       red: "red",
@@ -201,13 +207,17 @@ export const languageText = {
       bee: "bee",
       glam: "glamur",
       fruit: "fruit",
-      mint: "mint"
+      mint: "mint",
     },
     sendButtonDefault: "Send",
     formExplane: "Click to change",
-    formTags: "tags",
-    formFilter: "filter",
-    formManifest: "manifest",
+    formProperty: {
+      tags: "tags",
+      filter: "filter",
+      manifest: "manifest",
+      name: "name"
+    },
+    changeName: "You may set any name, but remember your unique name for log in",
     refreshData: "Download your data...",
     updateData: "Update your data...",
     computingAll: "Computing all users results...",
@@ -226,8 +236,10 @@ export const languageText = {
     deleteAvatar: "X",
     filterStatus: "filtred by",
     filterStatusDefault: "all",
-    simpleIndexScore: "score",
-    simpleIndexMistruth: "fickle",
+    simpleIndex: {
+      score: "score",
+      mistruth: "fickle",
+    },
     uniqueIndex: "unique",
     linkAccount: "To the user account",
     linkGame: "To the game",
@@ -235,7 +247,7 @@ export const languageText = {
     linkQuit: "Sign out",
     hello: {
       1: "Hello",
-      2: "!"
+      2: "!",
     },
     helloText: {
       1: "Go through our game and find people close to you.",
@@ -246,13 +258,13 @@ export const languageText = {
       6: "Unique - the percentage of uniqueness of your result in comparison with the total result of users eliminated relative to the set filter.",
       7: "The game tab, during the passage of which the application determines the percentage of uniqueness of your result in comparison with other users.",
       8: "The result of the game and the more you complete it helps to find users that are closest to your result.",
-      9: "Chat tab, where you will see a list of application users sorted by an indicator equal to the percentage of matches of your results, the number of compared pictures and the value of the filter set.",
-      10: "In the chat, you can leave your manifest, which will be visible to all users.",
+      9: "Closest persons tab, where you will see a list of application users sorted by an indicator equal to the percentage of matches of your results, the number of compared pictures and the value of the filter set.",
+      10: "Here you can leave your manifest, which will be visible to all users.",
       11: "Manifest of other users you can see in the chat list to the right of the username.",
       12: "By clicking on a user in the list, you can see additional information about him, as well as send him a message.",
-      13: "Find people who are really close to you!"
+      13: "Find people who are really close to you!",
     },
-    closestPeople: "Closest people",
+    closestPeople: "Closest persons",
     openUserInfo: "Click for open user info",
     otherLastUpdate: "last update",
     otherAvatarDefault: "avatar",
@@ -267,14 +279,14 @@ export const languageText = {
     otherMessageSend: "Send message...",
     otherMessageSendCrash: "Message not sent! Try again.",
     otherMessageDelete: "Delete message...",
-    otherMessageDeleteCrash: "Message not deleted! Try again."
+    otherMessageDeleteCrash: "Message not deleted! Try again.",
   },
   ru: {
     name: "ru",
     failedToFetch: "Нет связи с сервером",
     isNameFree: "Проверяем имя",
     loginConnect: "Соединяемся...",
-    failedloginConnect: "Требуется вход",
+    failedLoginConnect: "Требуется вход",
     toLoggedOut: "Выходим из системы...",
     toLoggedOutSucces: "Вышли из системы",
     toLoggedOutCrash: "Не получилось выйти",
@@ -283,27 +295,27 @@ export const languageText = {
     loginLabelName: {
       1: "Уникальное имя",
       2: "Хорошее новое имя",
-      3: "Это имя занято"
+      3: "Это имя занято",
     },
     loginLabelPassword: {
       1: "Пароль",
-      2: "Пароль не верен"
+      2: "Пароль не верен",
     },
     loginButton: "Войти",
     languageSetter: "Задайте язык",
     languageSetterSample: {
       1: "Задать",
-      2: "язык"
+      2: "язык",
     },
     languageName: {
       by: "белорусский",
       en: "английский",
-      ru: "русский"
+      ru: "русский",
     },
     colorSetter: "Задайте цветовую тему",
     colorSetterSample: {
       1: "Задать",
-      2: "тему"
+      2: "тему",
     },
     themeName: {
       red: "красную",
@@ -321,13 +333,17 @@ export const languageText = {
       bee: "пчелиную",
       glam: "гламурную",
       fruit: "фруктовую",
-      mint: "мятную"
+      mint: "мятную",
     },
     sendButtonDefault: "Отправить",
     formExplane: "Нажмите, чтобы изменить",
-    formTags: "тэги",
-    formFilter: "фильтр",
-    formManifest: "манифест",
+    formProperty: {
+      tags: "тэги",
+      filter: "фильтр",
+      manifest: "манифест",
+      name: "имя"
+    },
+    changeName: "Вы можете установить любое имя, но запомните свое уникальное имя для входа в систему",
     refreshData: "Загружаем ваши данные...",
     updateData: "Обновляем ваши данные...",
     computingAll: "Вычисляем результаты всех пользователей...",
@@ -346,8 +362,10 @@ export const languageText = {
     deleteAvatar: "X",
     filterStatus: "фильтруем по",
     filterStatusDefault: "всем",
-    simpleIndexScore: "счет",
-    simpleIndexMistruth: "переменчивый",
+    simpleIndex: {
+      score: "счет",
+      mistruth: "переменчивый",
+    },
     uniqueIndex: "уникальный",
     linkAccount: "К своему аккаунту",
     linkGame: "К игре",
@@ -355,7 +373,7 @@ export const languageText = {
     linkQuit: "Выход",
     hello: {
       1: "Привет",
-      2: "!"
+      2: "!",
     },
     helloText: {
       1: "Проходите нашу игру и находите близких вам людей.",
@@ -366,11 +384,11 @@ export const languageText = {
       6: "Уникальный - процент уникальности вашего результата в сравнении с общим результатом пользователей, отсеянных относительно установленного фильтра.",
       7: "Вкладка игры, при прохождении которой приложение определяет процент уникальности вашего результата по сравнению с остальными пользователями.",
       8: "Результат игры, и чем больше вы ее пройдете, помогает находить пользователей, что наиболее близки к вашему результату.",
-      9: "Вкладка чата, где вы увидете список пользователей приложения, отсортированный по показателю, равному проценту совпадения ваших результатов, количеству сравниваемых картинок и значению установленного фильтра.",
-      10: "В чате вы можете оставить свой манифест, что будет виден всем пользователям.",
+      9: "Вкладка близких людей, где вы увидете список пользователей приложения, отсортированный по показателю, равному проценту совпадения ваших результатов, количеству сравниваемых картинок и значению установленного фильтра.",
+      10: "Здесь вы можете оставить свой манифест, что будет виден всем пользователям.",
       11: "Манифест других пользователей вы можете увидеть в списке чата справа от имени пользователя.",
       12: "Нажав на пользователя в списке вы сможете увидеть дополнительную информацию о нем, а также отправить ему сообщение.",
-      13: "Найдите действительно близких вам людей!"
+      13: "Найдите действительно близких вам людей!",
     },
     closestPeople: "Близкие люди",
     openUserInfo: "Нажмите чтобы открыть информацию о пользователе",
@@ -387,6 +405,6 @@ export const languageText = {
     otherMessageSend: "Отправляем сообщение...",
     otherMessageSendCrash: "Сообщение не отправлено! Попробуйте еще.",
     otherMessageDelete: "Удаляем сообщение...",
-    otherMessageDeleteCrash: "Сообщение не удалено! Попробуйте еще."
-  }
+    otherMessageDeleteCrash: "Сообщение не удалено! Попробуйте еще.",
+  },
 };

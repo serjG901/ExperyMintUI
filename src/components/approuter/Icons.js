@@ -78,7 +78,7 @@ export function GameIcon() {
   );
 }
 
-export function ChatIcon() {
+export function ClosestPeopleIcon() {
   return (
     <svg
       version="1.1"

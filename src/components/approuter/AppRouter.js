@@ -1,74 +1,67 @@
-import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import { useTheme } from "../core/ThemeProvider";
 import { useLanguage } from "../core/LanguageProvider";
 import { usePushUpError } from "../core/PushUpErrorProvider";
 import { usePushUp } from "../core/PushUpProvider";
-import { useLogin, useLoginSet } from "../core/LoginProvider";
-import { AccountIcon, GameIcon, ChatIcon, QuitIcon } from "./Icons";
+import { useUser, useLogOut } from "../core/UserProvider";
+import Start from "../start/Start";
+import { AccountIcon, GameIcon, ClosestPeopleIcon, QuitIcon } from "./Icons";
 import Account from "../account/Account";
 import Game from "../game/Game";
-import Chat from "../chat/Chat";
+import ClosestPeople from "../closestpeople/ClosestPeople";
 import Hello from "./Hello";
-import Start from "../start/Start";
 import Background from "../common/Background";
 
 export default function AppRouter() {
+  const history = createBrowserHistory();
   const themeColor = useTheme();
   const language = useLanguage();
   const pushUpError = usePushUpError();
   const pushUp = usePushUp();
-  const isLogin = useLogin();
-  const setLogin = useLoginSet();
+  const user = useUser();
+  const logOut = useLogOut();
 
   const linkStyle = `
-    flex-1 w-1/4
-    py-2 px-4 
-    block h-full
-    transition-all duration-500
+    flex-1 
+    w-1/4
+    py-2 
+    px-4 
+    block 
+    h-full
+    transition-all 
+    duration-500
   `;
   const linkNotActive = `
+    ${linkStyle}
     ${themeColor.bgLink}
     hover:bg-opacity-50
-    ${linkStyle}
     `;
   const linkActive = `
-    bg-opacity-0
     ${linkStyle}
+    bg-opacity-0
     `;
 
-  const [activePage, setActivePage] = useState(
-    window.localStorage.getItem("activePage") || null
-  );
-
-  function handleActivePage(page) {
-    setActivePage(page);
-    window.localStorage.setItem("activePage", page);
-  }
-
   function handleQuit() {
-    setLogin(false);
-    handleActivePage(null);
+    logOut();
   }
 
   return (
     <div className={themeColor.colorTextMain}>
-      {isLogin === true ? (
+      {user === null ? (
+        <Start />
+      ) : (
         <Router>
           <div className={`h-screen text-center AppFontFamily${language.name}`}>
             <nav className="flex">
               <Link
                 title={language.linkAccount}
                 to="/account"
-                onClick={() => handleActivePage("account")}
                 className={
-                  activePage === "account" ? linkActive : linkNotActive
+                  history.location.pathname === "/account"
+                    ? linkActive
+                    : linkNotActive
                 }
               >
                 <AccountIcon />
@@ -76,18 +69,24 @@ export default function AppRouter() {
               <Link
                 title={language.linkGame}
                 to="/game"
-                onClick={() => handleActivePage("game")}
-                className={activePage === "game" ? linkActive : linkNotActive}
+                className={
+                  history.location.pathname === "/game"
+                    ? linkActive
+                    : linkNotActive
+                }
               >
                 <GameIcon />
               </Link>
               <Link
                 title={language.linkChat}
-                to="/chat"
-                onClick={() => handleActivePage("chat")}
-                className={activePage === "chat" ? linkActive : linkNotActive}
+                to="/closestpeople"
+                className={
+                  history.location.pathname === "/closestpeople"
+                    ? linkActive
+                    : linkNotActive
+                }
               >
-                <ChatIcon />
+                <ClosestPeopleIcon />
               </Link>
               <Link
                 title={language.linkQuit}
@@ -102,20 +101,18 @@ export default function AppRouter() {
               <Route path="/game">
                 <Game />
               </Route>
-              <Route path="/chat">
-                <Chat />
+              <Route path="/closestpeople">
+                <ClosestPeople />
               </Route>
               <Route path="/account">
                 <Account />
               </Route>
               <Route path="/">
-                {activePage ? <Redirect to={`/${activePage}`} /> : <Hello />}
+                <Hello />
               </Route>
             </Switch>
           </div>
         </Router>
-      ) : (
-        <Start />
       )}
       {pushUpError}
       {pushUp}

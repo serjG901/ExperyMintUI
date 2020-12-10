@@ -1,31 +1,36 @@
 ﻿import React from "react";
-import { useLanguage, useLanguageSet } from "../core/LanguageProvider";
 import { useTheme } from "../core/ThemeProvider";
+import { useLanguage, useLanguageSet } from "../core/LanguageProvider";
 
-export default function LanguageSample({ languageSample, children }) {
+export default function LanguageSample({ languageName }) {
   const themeColor = useTheme();
+  const language = useLanguage();
+  const setLanguage = useLanguageSet();
+
   const style = `
     flex-1
     transition-all 
     duration-1000
-    h-6 w-6 cursor-pointer
+    h-6 
+    w-6 
+    cursor-pointer
     hover:shadow-md 
     ${themeColor.colorTextExplane}
     `;
-  const setLanguage = useLanguageSet();
-  const language = useLanguage();
 
   return (
     <div
-      title={`${language.languageSetterSample[1]} ${language.languageName[languageSample]} ${language.languageSetterSample[2]}`}
-      className={`${style} ${
-        language.name === languageSample
-          ? "shadow-md bg-white bg-opacity-25"
-          : ""
-      }`}
-      onClick={() => setLanguage(languageSample)}
+      title={`${language.languageSetterSample[1]} ${language.languageName[languageName]} ${language.languageSetterSample[2]}`}
+      className={`
+        ${style} 
+        ${
+          language.name === languageName
+            ? "shadow-md bg-white bg-opacity-25"
+            : ""
+        }`}
+      onClick={() => setLanguage(languageName)}
     >
-      {languageSample}
+      {languageName}
     </div>
   );
 }

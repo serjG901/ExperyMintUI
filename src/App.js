@@ -1,28 +1,25 @@
 import React from "react";
 import "./App.css";
-import AppRouter from "./components/approuter/AppRouter";
 import { ThemeProvider } from "./components/core/ThemeProvider";
-import { LoginProvider } from "./components/core/LoginProvider";
-import { UserProvider } from "./components/core/UserProvider";
+import { LanguageProvider } from "./components/core/LanguageProvider";
 import { PushUpErrorProvider } from "./components/core/PushUpErrorProvider";
 import { PushUpProvider } from "./components/core/PushUpProvider";
-import { LanguageProvider } from "./components/core/LanguageProvider";
+import { UserProvider } from "./components/core/UserProvider";
+import AppRouter from "./components/approuter/AppRouter";
 
 function App() {
   return (
-    <PushUpErrorProvider>
-      <PushUpProvider>
-        <ThemeProvider>
-          <LanguageProvider>
-            <LoginProvider>
-              <UserProvider>
-                <AppRouter />
-              </UserProvider>
-            </LoginProvider>
-          </LanguageProvider>
-        </ThemeProvider>
-      </PushUpProvider>
-    </PushUpErrorProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <PushUpErrorProvider>
+          <PushUpProvider>
+            <UserProvider>
+              <AppRouter />
+            </UserProvider>
+          </PushUpProvider>
+        </PushUpErrorProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 

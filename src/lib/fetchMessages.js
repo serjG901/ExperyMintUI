@@ -1,69 +1,52 @@
-export async function getMessages(otherUserID) {
-  let response = await fetch("/getmessages/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify({ otherUserID })
-  });
+export async function getConversation(personId) {
+  let response = await fetch(`/conversations/${personId}`);
   if (response.ok) {
-    let json = await response.json();
-    return json.messages;
+    const json = await response.json();
+    return json.conversation;
   } else {
-    console.log("getMessages Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }
 
-export async function deleteMessage(otherUserID, messageID) {
+export async function sendMessage(personId, message, currentDate) {
+  let response = await fetch(`/conversations/${personId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify({ message, currentDate }),
+  });
+  if (response.ok) {
+    const json = await response.json();
+    return json.conversation;
+  } else {
+    throw new Error("Ошибка HTTP: " + response.status);
+  }
+}
+
+export async function deleteMessage(personId, messageId) {
   let response = await fetch(
-    "/deletemessage/",
+    `/conversations/${personId}/messages/${messageId}`,
     {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8"
-      },
-      body: JSON.stringify({ otherUserID, messageID })
+      method: "DELETE",
     }
   );
   if (response.ok) {
-    let json = await response.json();
-    return json.status;
+    const json = await response.json();
+    return json.conversation;
   } else {
-    console.log("deleteMessage Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }
 
-export async function sendMessage(otherUserID, message, currentDate) {
-  let response = await fetch("/sendmessage/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify({ otherUserID, message, currentDate })
+export async function setMessagesIsRead(personId) {
+  let response = await fetch(`/conversations/${personId}/messages/`, {
+    method: "PUT",
   });
   if (response.ok) {
-    let json = await response.json();
-    return json.status;
+    const json = await response.json();
+    return json.messages;
   } else {
-    console.log("sendMessage Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
-  }
-}
-
-export async function setIsRead(otherUserID, messageID) {
-  let response = await fetch("/setisread/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify({ otherUserID, messageID })
-  });
-  if (response.ok) {
-    let json = await response.json();
-  } else {
-    console.log("deleteMessage Ошибка HTTP: " + response.status);
-    return new Error("Ошибка HTTP: " + response.status);
+    throw new Error("Ошибка HTTP: " + response.status);
   }
 }

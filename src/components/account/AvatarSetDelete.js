@@ -13,7 +13,9 @@ export default function AvatarSetDelete() {
   const styleLikeButton = `
     transition-all 
     duration-1000
-    mx-4 py-2 px-4 
+    mx-4 
+    py-2 
+    px-4 
     rounded shadow-md
     cursor-pointer
     focus:outline-none 
