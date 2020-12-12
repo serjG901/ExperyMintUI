@@ -1,3 +1,5 @@
+import queryString from "query-string";
+
 export async function checkUserId(userId) {
   const response = await fetch(`/userid/${userId}`);
   if (response.ok) {
@@ -105,7 +107,8 @@ export async function uploadAvatar(id, avatar) {
 }
 
 export async function people(filter) {
-  const response = await fetch(`/people/${filter}`);
+  const url = queryString.stringifyUrl({ url: "/people", query: { filter } });
+  const response = await fetch(url);
   if (response.ok) {
     const json = await response.json();
     return json.people;
