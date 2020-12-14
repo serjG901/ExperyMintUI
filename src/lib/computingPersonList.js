@@ -23,10 +23,9 @@
       closest:
         100 -
         Math.round(
-          (10000 * Object.values(comparedResult).reduce((a, b) => a + b)) /
+          (100 * Object.values(comparedResult).reduce((a, b) => a + b)) /
             Object.keys(comparedResult).length
-        ) /
-          100,
+        ),
       comparedImage: Object.keys(comparedResult).length,
     });
   }

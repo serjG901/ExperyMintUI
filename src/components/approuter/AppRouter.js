@@ -98,14 +98,14 @@ export default function AppRouter() {
               </Link>
             </nav>
             <Switch>
+              <Route path="/account">
+                <Account />
+              </Route>
               <Route path="/game">
                 <Game />
               </Route>
               <Route path="/closestpeople">
                 <ClosestPeople />
-              </Route>
-              <Route path="/account">
-                <Account />
               </Route>
               <Route path="/">
                 <Hello />

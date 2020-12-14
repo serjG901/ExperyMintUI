@@ -25,11 +25,10 @@ export async function computingUniqueIndex(resultsUser, people) {
   }
   if (Object.keys(uniqueImage).length === 0) return null;
 
-  const unique =
-    Math.round(
-      (100 * Object.values(uniqueImage).reduce((a, b) => a + b)) /
-        Object.keys(uniqueImage).length
-    ) / 100;
+  const unique = Math.round(
+    Object.values(uniqueImage).reduce((a, b) => a + b) /
+      Object.keys(uniqueImage).length
+  );
 
   return { result: unique, forImage: uniqueImage, full: gameResult };
 }
