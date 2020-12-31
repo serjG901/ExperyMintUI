@@ -26,9 +26,9 @@ export default function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     if (userIdIsFree) {
-      await signUp({ id: userId, password });
+      await signUp({ id: userId, password, theme: themeColor.color });
     } else {
-      signIn({ id: userId, password }).then((user) => {
+      signIn({ id: userId, password, theme: themeColor.color }).then((user) => {
         if (user === null) setPasswordIsCorrect(false);
       });
     }

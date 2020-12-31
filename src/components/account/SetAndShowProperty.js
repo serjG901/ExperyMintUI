@@ -35,11 +35,11 @@ export default function SetAndShowProperty({ property }) {
             ? ""
             : `${language.formExplane} ${language.formProperty[property]}`
         }
-        className="block text-sm cursor-pointer italic"
+        className="block text-sm cursor-pointer italic hover:underline"
         onClick={() => setStatusInput(!statusInput)}
       >
-        <span className={`${themeColor.colorTextLabel} font-bold`}>
-          {language.formProperty[property]}
+        <span className={`${themeColor.colorTextLabel} text-xl font-bold`}>
+          {user[property]==="" ? language.formProperty[property] : ""}
         </span>
         <p
           className={

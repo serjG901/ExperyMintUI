@@ -17,14 +17,22 @@ export default function SendButton(props) {
   cursor-pointer
   focus:outline-none 
   focus:shadow-outline
-  ${themeColor.colorTextMain}
+  ${
+    props.themeColor ? props.themeColor.colorTextMain : themeColor.colorTextMain
+  }
   `;
 
   const [addStyle, setAddStyle] = useState(`shadow-none bg-transparent`);
 
   useEffect(
     () =>
-      setAddStyle(`shadow-md ${themeColor.bgButton} ${themeColor.hbgButton}`),
+      setAddStyle(
+        `shadow-md ${
+          props.themeColor ? props.themeColor.bgButton : themeColor.bgButton
+        } ${
+          props.themeColor ? props.themeColor.hbgButton : themeColor.hbgButton
+        }`
+      ),
     [themeColor]
   );
 

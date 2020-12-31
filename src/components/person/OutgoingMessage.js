@@ -1,9 +1,10 @@
 ﻿import React from "react";
-import { useTheme } from "../core/ThemeProvider";
 
-export default function OutgoingMessage({ message, onDeleteMessage }) {
-  const themeColor = useTheme();
-
+export default function OutgoingMessage({
+  themeColor,
+  message,
+  onDeleteMessage,
+}) {
   const style = `
     relative
     shadow-md

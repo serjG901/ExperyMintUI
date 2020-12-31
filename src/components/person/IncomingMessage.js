@@ -1,9 +1,10 @@
 ﻿import React from "react";
-import { useTheme } from "../core/ThemeProvider";
 
-export default function IncomingMessage({ message, onDeleteMessage }) {
-  const themeColor = useTheme();
-
+export default function IncomingMessage({
+  themeColor,
+  message,
+  onDeleteMessage,
+}) {
   const style = `
     relative
     self-start 

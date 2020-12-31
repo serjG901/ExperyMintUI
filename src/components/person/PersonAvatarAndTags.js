@@ -19,25 +19,17 @@ export default function PersonAvatarAndTags({ personId, tags }) {
   }, [personId]);
 
   return (
-    <div className="flex">
-      <div className="w-1/2 p-4">
-        {avatar !== null ? (
+    <div className="flex justify-center">
+      {avatar !== null ? (
+        <div className="w-1/2 p-4">
           <img src={avatar} alt="avatar" className="inline-block" />
-        ) : (
-          <span className={`${themeColor.colorTextExplane}`}>
-            {language.otherAvatarDefault}
-          </span>
-        )}
-      </div>
-      <div className="w-1/2 p-4 italic">
-        {tags !== "" ? (
+        </div>
+      ) : null}
+      {tags !== "" ? (
+        <div className="w-1/2 p-4 italic">
           <p className="font-bold break-words">{tags}</p>
-        ) : (
-          <span className={`${themeColor.colorTextExplane}`}>
-            {language.otherTagsDefault}
-          </span>
-        )}
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }

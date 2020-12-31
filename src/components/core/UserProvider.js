@@ -106,10 +106,10 @@ export const UserProvider = ({ children }) => {
     }
   }
 
-  async function signUp({ id, password }) {
+  async function signUp({ id, password, theme }) {
     setPushUp(language.loginConnect);
     try {
-      const user = await addUser({ id, password });
+      const user = await addUser({ id, password, theme });
       setPushUp(null);
       if (user !== null) {
         userRef.current = user;
@@ -124,10 +124,10 @@ export const UserProvider = ({ children }) => {
     }
   }
 
-  async function signIn({ id, password }) {
+  async function signIn({ id, password, theme }) {
     setPushUp(language.loginConnect);
     try {
-      const user = await login({ id, password });
+      const user = await login({ id, password, theme });
       setPushUp(null);
       if (user !== null) {
         userRef.current = user;

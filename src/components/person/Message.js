@@ -3,11 +3,19 @@ import { useUser } from "../core/UserProvider";
 import OutgoingMessage from "./OutgoingMessage";
 import IncomingMessage from "./IncomingMessage";
 
-export default function Message({ message, onDeleteMessage }) {
+export default function Message({ themeColor, message, onDeleteMessage }) {
   const user = useUser();
   return user._id === message.from ? (
-    <OutgoingMessage message={message} onDeleteMessage={onDeleteMessage} />
+    <OutgoingMessage
+      themeColor={themeColor}
+      message={message}
+      onDeleteMessage={onDeleteMessage}
+    />
   ) : (
-    <IncomingMessage message={message} onDeleteMessage={onDeleteMessage} />
+    <IncomingMessage
+      themeColor={themeColor}
+      message={message}
+      onDeleteMessage={onDeleteMessage}
+    />
   );
 }

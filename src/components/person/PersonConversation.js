@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useTheme } from "../core/ThemeProvider";
 import { useLanguage } from "../core/LanguageProvider";
 import { useUser } from "../core/UserProvider";
 import {
@@ -11,8 +10,7 @@ import Message from "./Message";
 import SendButton from "../common/SendButton";
 import TextareaAutosize from "react-textarea-autosize";
 
-export default function PersonConversation({ personId, name }) {
-  const themeColor = useTheme();
+export default function PersonConversation({ personId, name, themeColor }) {
   const language = useLanguage();
   const user = useUser();
   const conversation = useConversation();
@@ -54,18 +52,18 @@ export default function PersonConversation({ personId, name }) {
 
   return (
     <div>
-      <span className={`${themeColor.colorTextExplane}`}>
-        {`${language.otherChat} ${name}`}
-      </span>
-      <div className="flex flex-col">
-        {localConversation.map((message) => (
-          <Message
-            key={`${personId}${message.date}`}
-            message={message}
-            onDeleteMessage={handleDeleteMessage}
-          />
-        ))}
-      </div>
+      {localConversation.length !== 0 ? (
+        <div className="flex flex-col">
+          {localConversation.map((message) => (
+            <Message
+              themeColor={themeColor}
+              key={`${personId}${message.date}`}
+              message={message}
+              onDeleteMessage={handleDeleteMessage}
+            />
+          ))}
+        </div>
+      ) : null}
       <form className="flex justify-end" onSubmit={handleMessageSubmit}>
         <TextareaAutosize
           type="text"
@@ -84,7 +82,7 @@ export default function PersonConversation({ personId, name }) {
           onChange={handleDraftChange}
           value={draft}
         />
-        <SendButton />
+        <SendButton themeColor={themeColor}/>
       </form>
     </div>
   );

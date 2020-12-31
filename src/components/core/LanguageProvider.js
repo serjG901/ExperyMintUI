@@ -99,7 +99,7 @@ export const languageText = {
     refreshOthers: "Загружаем іншых карыстальнікаў...",
     refreshClosest: "Знаходзім блізкіх людзей...",
     gameExplane:
-      ", уявіце, што вы дырэктар галерэі сучаснага мастацтва. Пакіньце на сцяне карціны, якія вам спадабаюцца.",
+      ", уявіце, што вы дырэктар галерэі сучаснага мастацтва. Пакіньце на сцяне карціны, якія вам падабаюцца.",
     leaveTitle: "Пакінуць гэту карціну на сцяне",
     leave: "Пакінуць",
     removeTitle: "Прыбраць гэту карціну са сцяны",
@@ -224,8 +224,8 @@ export const languageText = {
     computingUnique: "Computing your unique index...",
     refreshOthers: "Download other users...",
     refreshClosest: "Find closest users...",
-    gameExplane: `, imagine that you're the director of an modern art gallery.
-    Leave on the wall pictures that you'd like.`,
+    gameExplane: `, imagine that you're the director of an new art gallery.
+    Leave the pictures you like on the wall.`,
     leaveTitle: "Leave the picture on the wall",
     leave: "Leave",
     removeTitle: "Remove the picture from the wall",
