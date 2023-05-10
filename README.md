@@ -11,7 +11,7 @@ Adaptive flex design, 3 main page - account, game, closest people.
 
 User may register in app with unique name and password.
 Unique name - its _id for insert user data in mongodb.
-User may change he name in account page, but unique name stay his login name.
+User may change public name in account page, but unique name stay his login name.
 
 User may set tags - info about himself.
 User may upload any png/jpg avatar, but avatar resize in  400*400px (max) PNG in base64.
